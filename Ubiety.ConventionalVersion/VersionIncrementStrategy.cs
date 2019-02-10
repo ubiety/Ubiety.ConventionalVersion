@@ -16,30 +16,32 @@ namespace Ubiety.ConventionalVersion
     public class VersionIncrementStrategy
     {
         private readonly VersionImpact _impact;
+        private readonly bool _isMaster;
 
-        private VersionIncrementStrategy(VersionImpact impact)
+        private VersionIncrementStrategy(VersionImpact impact, bool isMaster)
         {
             _impact = impact;
+            _isMaster = isMaster;
         }
 
-        public Version NextVersion(Version version)
+        public ProjectVersion NextVersion(ProjectVersion version)
         {
             switch (_impact)
             {
                 case VersionImpact.None:
-                    return new Version(version.Major, version.Minor, version.Build + 1);
+                    return version.ChangeSuffix(_isMaster);
                 case VersionImpact.Patch:
-                    return new Version(version.Major, version.Minor, version.Build + 1);
+                    return version.IncrementBuild(_isMaster);
                 case VersionImpact.Minor:
-                    return new Version(version.Major, version.Minor + 1, 0);
+                    return version.IncrementMinor(_isMaster);
                 case VersionImpact.Major:
-                    return new Version(version.Major + 1, 0, 0);
+                    return version.IncrementMajor(_isMaster);
                 default:
                     return default;
             }
         }
 
-        public static VersionIncrementStrategy Create(IEnumerable<ConventionalCommit> commits)
+        public static VersionIncrementStrategy Create(IEnumerable<ConventionalCommit> commits, bool isMaster)
         {
             var impact = VersionImpact.None;
 
@@ -66,7 +68,7 @@ namespace Ubiety.ConventionalVersion
                 }
             }
 
-            return new VersionIncrementStrategy(impact);
+            return new VersionIncrementStrategy(impact, isMaster);
         }
 
         private static VersionImpact MaxImpact(VersionImpact left, VersionImpact right)

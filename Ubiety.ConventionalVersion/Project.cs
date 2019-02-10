@@ -6,7 +6,6 @@ using System.Xml.XPath;
 using LibGit2Sharp;
 using Ubiety.ConventionalVersion.Commits;
 using Ubiety.ConventionalVersion.Extensions;
-using Version = System.Version;
 
 namespace Ubiety.ConventionalVersion
 {
@@ -14,7 +13,7 @@ namespace Ubiety.ConventionalVersion
     {
         private const string versionXPath = "./Project/PropertyGroup/Version";
 
-        private Project(string file, Version version)
+        private Project(string file, ProjectVersion version)
         {
             File = file;
             Version = version;
@@ -22,7 +21,7 @@ namespace Ubiety.ConventionalVersion
 
         public string File { get; }
 
-        public Version Version { get; }
+        public ProjectVersion Version { get; }
 
         public static IEnumerable<Project> DiscoverProjects(string directory)
         {
@@ -43,7 +42,7 @@ namespace Ubiety.ConventionalVersion
             return true;
         }
 
-        public static Version GetVersion(string projectFile)
+        public static ProjectVersion GetVersion(string projectFile)
         {
             XDocument document = XDocument.Load(projectFile);
             var versionElement = document.XPathSelectElement(versionXPath);
@@ -53,25 +52,27 @@ namespace Ubiety.ConventionalVersion
                 return default;
             }
 
-            return new Version(versionElement.Value);
+            return new ProjectVersion(versionElement.Value);
         }
 
-        public Version GetNextVersion(Repository repository)
+        public ProjectVersion GetNextVersion(Repository repository)
         {
             var versionTag = repository.GetVersionTag(Version);
             var commits = repository.GetCommitsSinceLastVersion(versionTag);
 
+            var isMaster = repository.Head.FriendlyName == "master";
+
             var conventionalCommits = CommitParser.Parse(commits);
-            var incrementStrategy = VersionIncrementStrategy.Create(conventionalCommits);
+            var incrementStrategy = VersionIncrementStrategy.Create(conventionalCommits, isMaster);
 
             return incrementStrategy.NextVersion(Version);
         }
 
-        public void SetVersion(Version nextVersion)
+        public void SetVersion(ProjectVersion nextVersion)
         {
             XDocument document = XDocument.Load(File);
             var versionElement = document.XPathSelectElement(versionXPath);
-            versionElement.Value = nextVersion.ToString();
+            versionElement.Value = nextVersion;
             document.Save(File);
         }
 

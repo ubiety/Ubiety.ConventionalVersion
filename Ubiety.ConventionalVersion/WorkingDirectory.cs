@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using LibGit2Sharp;
 using static Ubiety.Console.Ui.CommandLine;
-using Version = System.Version;
 
 namespace Ubiety.ConventionalVersion
 {
@@ -66,6 +65,11 @@ namespace Ubiety.ConventionalVersion
         {
             var workingDirectory = _workingDirectory.FullName;
 
+            if (dryRun)
+            {
+                Information("DRY RUN - No changes will be committed");
+            }
+
             Information($"Working directory is {workingDirectory}");
 
             using (var repository = new Repository(workingDirectory))
@@ -92,16 +96,23 @@ namespace Ubiety.ConventionalVersion
 
                 if (!string.IsNullOrEmpty(releaseAs))
                 {
-                    nextVersion = new Version(releaseAs);
+                    nextVersion = new ProjectVersion(releaseAs);
                 }
 
-                if (!dryRun && (nextVersion != projects.First().Version))
+                foreach (var project in projects)
                 {
-                    foreach (var project in projects)
+                    if (nextVersion != projects.First().Version)
                     {
-                        project.SetVersion(nextVersion);
-                        Commands.Stage(repository, project.File);
+                        if (!dryRun)
+                        {
+                            project.SetVersion(nextVersion);
+                            Commands.Stage(repository, project.File);
+                        }
                         Step($"Bumping version from {project.Version} to {nextVersion} in project {project.File}");
+                    }
+                    else
+                    {
+                        Information($"No version change for project {project.File}");
                     }
                 }
             }

@@ -20,12 +20,19 @@ namespace Ubiety.Console.Ui
 
         public void WriteLine(string message, Color color, Formatter[] formatters = null)
         {
-            if(Verbosity == VerbosityLevel.Silent)
+            if (Verbosity == VerbosityLevel.Silent)
             {
                 return;
             }
 
-            Colorful.Console.WriteLine(message, color, formatters);
+            if (formatters is null)
+            {
+                Colorful.Console.WriteLine(message, color);
+            }
+            else
+            {
+                Colorful.Console.WriteLineFormatted(message, color, formatters);
+            }
         }
     }
 }

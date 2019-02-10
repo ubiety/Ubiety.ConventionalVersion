@@ -6,7 +6,7 @@ namespace Ubiety.ConventionalVersion.Extensions
 {
     public static class RepositoryExtensions
     {
-        public static Tag GetVersionTag(this Repository repository, System.Version version)
+        public static Tag GetVersionTag(this Repository repository, ProjectVersion version)
         {
             return repository.Tags.SingleOrDefault(tag => tag.IsAnnotated && tag.Annotation.Name == $"v{version}");
         }
