@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using McMaster.Extensions.CommandLineUtils;
+﻿using McMaster.Extensions.CommandLineUtils;
 using Ubiety.Console.Ui;
 
 namespace Ubiety.ConventionalVersion
@@ -9,9 +8,9 @@ namespace Ubiety.ConventionalVersion
     [VersionOptionFromMember(MemberName = "Version")]
     public class Program
     {
-        static Task<int> Main(string[] args)
+        static int Main(string[] args)
         {
-            return CommandLineApplication.ExecuteAsync<Program>(args);
+            return CommandLineApplication.Execute<Program>(args);
         }
 
         [Option(Description = "Execute without actually committing")]
@@ -27,15 +26,15 @@ namespace Ubiety.ConventionalVersion
         public bool Silent { get; set; }
 
         [Argument(0, Description = "Git project directory, will use current directory if not supplied")]
-        public string Directory { get; set; }
+        public string ProjectPath { get; set; }
 
-        private async Task<int> OnExecuteAsync()
+        private int OnExecute()
         {
             CommandLine.Platform.Verbosity = Silent ? VerbosityLevel.Silent : VerbosityLevel.All;
 
             WorkingDirectory
-                .DiscoverRepository(string.IsNullOrEmpty(Directory) ? System.IO.Directory.GetCurrentDirectory() : Directory)
-                .UpdateVersion(SkipDirty);
+                .DiscoverRepository(ProjectPath)
+                .UpdateVersion(SkipDirty, ReleaseAs, DryRun);
 
             return 0;
         }

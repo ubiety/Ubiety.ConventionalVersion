@@ -1,13 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using System.Xml.XPath;
+using LibGit2Sharp;
+using Ubiety.ConventionalVersion.Commits;
+using Ubiety.ConventionalVersion.Extensions;
+using Version = System.Version;
 
 namespace Ubiety.ConventionalVersion
 {
     public class Project
     {
+        private const string versionXPath = "./Project/PropertyGroup/Version";
+
         private Project(string file, Version version)
         {
             File = file;
@@ -40,15 +46,32 @@ namespace Ubiety.ConventionalVersion
         public static Version GetVersion(string projectFile)
         {
             XDocument document = XDocument.Load(projectFile);
-            var versionString = document.Element("Version").Value;
+            var versionElement = document.XPathSelectElement(versionXPath);
 
-            return new Version(versionString);
+            if (versionElement is null)
+            {
+                return default;
+            }
+
+            return new Version(versionElement.Value);
+        }
+
+        public Version GetNextVersion(Repository repository)
+        {
+            var versionTag = repository.GetVersionTag(Version);
+            var commits = repository.GetCommitsSinceLastVersion(versionTag);
+
+            var conventionalCommits = CommitParser.Parse(commits);
+            var incrementStrategy = VersionIncrementStrategy.Create(conventionalCommits);
+
+            return incrementStrategy.NextVersion(Version);
         }
 
         public void SetVersion(Version nextVersion)
         {
             XDocument document = XDocument.Load(File);
-            document.Element("Version").Value = nextVersion.ToString();
+            var versionElement = document.XPathSelectElement(versionXPath);
+            versionElement.Value = nextVersion.ToString();
             document.Save(File);
         }
 

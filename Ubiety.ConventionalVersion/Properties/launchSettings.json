@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Ubiety.ConventionalVersion": {
+      "commandName": "Project",
+      "commandLineArgs": "c:/users/coder/source/repos/Ubiety.Scram.Core/Ubiety.Scram.Core/Ubiety.Scram.Core.csproj"
+    }
+  }
+}
