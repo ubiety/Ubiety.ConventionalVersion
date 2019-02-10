@@ -18,7 +18,12 @@
 
         public static implicit operator string(MdLink link)
         {
-            return link.GetValue();
+            return link.ToString();
+        }
+
+        public override string ToString()
+        {
+            return GetValue();
         }
     }
 }

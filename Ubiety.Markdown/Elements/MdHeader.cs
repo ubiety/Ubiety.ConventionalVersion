@@ -1,17 +1,17 @@
 ﻿namespace Ubiety.Markdown.Elements
 {
+    public enum HeaderWeight
+    {
+        One,
+        Two,
+        Three,
+        Four,
+        Five,
+        Six
+    }
+
     public class MdHeader : IMarkdown
     {
-        public enum HeaderWeight
-        {
-            One,
-            Two,
-            Three,
-            Four,
-            Five,
-            Six
-        }
-
         private readonly string _text;
         private readonly HeaderWeight _weight;
 
@@ -44,7 +44,12 @@
 
         public static implicit operator string(MdHeader header)
         {
-            return header.GetValue();
+            return header.ToString();
+        }
+
+        public override string ToString()
+        {
+            return GetValue();
         }
     }
 }

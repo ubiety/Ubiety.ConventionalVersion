@@ -23,6 +23,8 @@ namespace Ubiety.ConventionalVersion
 
         public ProjectVersion Version { get; }
 
+        public IEnumerable<Commit> Commits { get; private set; }
+
         public static IEnumerable<Project> DiscoverProjects(string directory)
         {
             return Directory
@@ -58,11 +60,11 @@ namespace Ubiety.ConventionalVersion
         public ProjectVersion GetNextVersion(Repository repository)
         {
             var versionTag = repository.GetVersionTag(Version);
-            var commits = repository.GetCommitsSinceLastVersion(versionTag);
+            Commits = repository.GetCommitsSinceLastVersion(versionTag);
 
             var isMaster = repository.Head.FriendlyName == "master";
 
-            var conventionalCommits = CommitParser.Parse(commits);
+            var conventionalCommits = CommitParser.Parse(Commits);
             var incrementStrategy = VersionIncrementStrategy.Create(conventionalCommits, isMaster);
 
             return incrementStrategy.NextVersion(Version);

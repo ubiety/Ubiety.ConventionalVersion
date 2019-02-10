@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ubiety.Console.Ui\Ubiety.Console.Ui.csproj" />
+    <ProjectReference Include="..\Ubiety.Markdown\Ubiety.Markdown.csproj" />
   </ItemGroup>
 
 </Project>

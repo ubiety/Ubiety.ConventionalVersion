@@ -8,7 +8,7 @@ namespace Ubiety.ConventionalVersion.Extensions
     {
         public static Tag GetVersionTag(this Repository repository, ProjectVersion version)
         {
-            return repository.Tags.SingleOrDefault(tag => tag.IsAnnotated && tag.Annotation.Name == $"v{version}");
+            return repository.Tags.SingleOrDefault(tag => tag.IsAnnotated && tag.Annotation.Name == version.Tag);
         }
 
         public static IEnumerable<Commit> GetCommitsSinceLastVersion(this Repository repository, Tag tag)

@@ -9,7 +9,12 @@
 
         public static implicit operator string(MdRule rule)
         {
-            return rule.GetValue();
+            return rule.ToString();
+        }
+
+        public override string ToString()
+        {
+            return GetValue();
         }
     }
 }

@@ -16,7 +16,12 @@
 
         public static implicit operator string(MdBold bold)
         {
-            return bold.GetValue();
+            return bold.ToString();
+        }
+
+        public override string ToString()
+        {
+            return GetValue();
         }
     }
 }

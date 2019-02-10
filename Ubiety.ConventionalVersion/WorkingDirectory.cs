@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using LibGit2Sharp;
@@ -8,11 +9,14 @@ namespace Ubiety.ConventionalVersion
 {
     public class WorkingDirectory
     {
-        private readonly DirectoryInfo _workingDirectory;
+        private readonly string _workingDirectoryName;
+        private readonly Repository _repository;
+        private IEnumerable<Project> _projects;
 
-        private WorkingDirectory(DirectoryInfo directory)
+        private WorkingDirectory(string directoryName)
         {
-            _workingDirectory = directory;
+            _workingDirectoryName = directoryName;
+            _repository = new Repository(_workingDirectoryName);
         }
 
         public static WorkingDirectory DiscoverRepository(string projectPath)
@@ -50,7 +54,7 @@ namespace Ubiety.ConventionalVersion
                 var isWorkingDirectory = candidate.GetDirectories(".git").Any();
                 if (isWorkingDirectory)
                 {
-                    return new WorkingDirectory(candidate);
+                    return new WorkingDirectory(candidate.FullName);
                 }
 
                 candidate = candidate.Parent;
@@ -63,66 +67,68 @@ namespace Ubiety.ConventionalVersion
 
         public WorkingDirectory UpdateVersion(bool skipDirtyCheck, string releaseAs, bool dryRun)
         {
-            var workingDirectory = _workingDirectory.FullName;
-
             if (dryRun)
             {
                 Information("DRY RUN - No changes will be committed");
             }
 
-            Information($"Working directory is {workingDirectory}");
+            Information($"Working directory is {_workingDirectoryName}");
 
-            using (var repository = new Repository(workingDirectory))
+            if (_repository.RetrieveStatus().IsDirty && !skipDirtyCheck)
             {
-                if (repository.RetrieveStatus().IsDirty && !skipDirtyCheck)
+                Exit("Repository is dirty. Please commit your changes and try again", 1);
+            }
+
+            _projects = Project.DiscoverProjects(_workingDirectoryName);
+
+            if (_projects.Count() == 0)
+            {
+                Exit($"Could not find any projects in {_workingDirectoryName} that have <Version> set.", 1);
+            }
+
+            Information($"Discovered {_projects.Count()} versionable project(s)");
+            foreach (var project in _projects)
+            {
+                Information($"  * {project.File}");
+            }
+
+            var nextVersion = _projects.First().GetNextVersion(_repository);
+
+            if (!string.IsNullOrEmpty(releaseAs))
+            {
+                nextVersion = new ProjectVersion(releaseAs);
+            }
+
+            foreach (var project in _projects)
+            {
+                if (nextVersion != project.Version)
                 {
-                    Exit("Repository is dirty. Please commit your changes and try again", 1);
-                }
-
-                var projects = Project.DiscoverProjects(workingDirectory);
-
-                if (projects.Count() == 0)
-                {
-                    Exit($"Could not find any projects in {workingDirectory} that have <Version> set.", 1);
-                }
-
-                Information($"Discovered {projects.Count()} versionable project(s)");
-                foreach (var project in projects)
-                {
-                    Information($"  * {project.File}");
-                }
-
-                var nextVersion = projects.First().GetNextVersion(repository);
-
-                if (!string.IsNullOrEmpty(releaseAs))
-                {
-                    nextVersion = new ProjectVersion(releaseAs);
-                }
-
-                foreach (var project in projects)
-                {
-                    if (nextVersion != projects.First().Version)
+                    if (!dryRun)
                     {
-                        if (!dryRun)
-                        {
-                            project.SetVersion(nextVersion);
-                            Commands.Stage(repository, project.File);
-                        }
-                        Step($"Bumping version from {project.Version} to {nextVersion} in project {project.File}");
+                        project.SetVersion(nextVersion);
+                        Commands.Stage(_repository, project.File);
                     }
-                    else
-                    {
-                        Information($"No version change for project {project.File}");
-                    }
+                    Step($"Bumping version from {project.Version} to {nextVersion} in project {project.File}");
+                }
+                else
+                {
+                    Information($"No version change for project {project.File}");
                 }
             }
 
             return this;
         }
 
-        public void UpdateChangelog(bool dryRun)
+        public WorkingDirectory UpdateChangelog(bool dryRun)
         {
+            var changelog = Changelog.DiscoverChangelog(_workingDirectoryName);
 
+            if (dryRun)
+            {
+                Information(changelog.UpdateChangelog(_projects.First(), _repository));
+            }
+
+            return default;
         }
     }
 }

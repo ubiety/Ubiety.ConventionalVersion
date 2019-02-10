@@ -4,7 +4,7 @@ namespace Ubiety.ConventionalVersion
 {
     public class ProjectVersion
     {
-        private readonly bool _isPreview;
+        private bool _isPreview;
 
         public ProjectVersion(Version version, bool isPreview = false)
         {
@@ -28,19 +28,35 @@ namespace Ubiety.ConventionalVersion
 
         public Version Version { get; set; }
 
+        public string Tag { get => $"v{Version}"; }
+
+        public string PreviousTag { get; private set; }
+
         public ProjectVersion IncrementBuild(bool isMaster)
         {
-            return new ProjectVersion(new Version(Version.Major, Version.Minor, Version.Build + 1), !isMaster);
+            PreviousTag = Tag;
+            Version = new Version(Version.Major, Version.Minor, Version.Build + 1);
+            _isPreview = !isMaster;
+
+            return this;
         }
 
         public ProjectVersion IncrementMinor(bool isMaster)
         {
-            return new ProjectVersion(new Version(Version.Major, Version.Minor + 1, 0), !isMaster);
+            PreviousTag = Tag;
+            Version = new Version(Version.Major, Version.Minor + 1, 0);
+            _isPreview = !isMaster;
+
+            return this;
         }
 
         public ProjectVersion IncrementMajor(bool isMaster)
         {
-            return new ProjectVersion(new Version(Version.Major + 1, 0, 0), !isMaster);
+            PreviousTag = Tag;
+            Version = new Version(Version.Major + 1, 0, 0);
+            _isPreview = !isMaster;
+
+            return this;
         }
 
         public ProjectVersion ChangeSuffix(bool isMaster)
@@ -56,16 +72,6 @@ namespace Ubiety.ConventionalVersion
         public static implicit operator string(ProjectVersion version)
         {
             return version.ToString();
-        }
-
-        public static implicit operator ProjectVersion(Version version)
-        {
-            return new ProjectVersion(version);
-        }
-
-        public static explicit operator Version(ProjectVersion version)
-        {
-            return version.Version;
         }
 
         public static bool operator ==(ProjectVersion left, ProjectVersion right)

@@ -25,7 +25,7 @@ namespace Ubiety.ConventionalVersion
         [Option("--silent", Description = "Disable console output")]
         public bool Silent { get; set; }
 
-        [Argument(0, Description = "Git project directory, will use current directory if not supplied")]
+        [Argument(0, Description = "Git project directory or csproj file, will use current directory if not supplied")]
         public string ProjectPath { get; set; }
 
         private int OnExecute()
@@ -34,7 +34,8 @@ namespace Ubiety.ConventionalVersion
 
             WorkingDirectory
                 .DiscoverRepository(ProjectPath)
-                .UpdateVersion(SkipDirty, ReleaseAs, DryRun);
+                .UpdateVersion(SkipDirty, ReleaseAs, DryRun)
+                .UpdateChangelog(DryRun);
 
             return 0;
         }

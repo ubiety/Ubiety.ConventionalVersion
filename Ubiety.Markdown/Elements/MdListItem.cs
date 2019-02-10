@@ -16,7 +16,12 @@
 
         public static implicit operator string(MdListItem listItem)
         {
-            return listItem.GetValue();
+            return listItem.ToString();
+        }
+
+        public override string ToString()
+        {
+            return GetValue();
         }
     }
 }
