@@ -22,9 +22,12 @@ namespace Ubiety.Markdown
             _document.AppendLine(value);
         }
 
-        public void AddNewLine()
+        public void AddNewLines(int lines = 1)
         {
-            _document.AppendLine();
+            for (int i = 0; i < lines; i++)
+            {
+                _document.AppendLine();
+            }
         }
 
         public static implicit operator string(MarkdownDocument document)

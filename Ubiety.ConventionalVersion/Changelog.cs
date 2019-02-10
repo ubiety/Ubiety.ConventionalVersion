@@ -9,7 +9,7 @@ namespace Ubiety.ConventionalVersion
     public class Changelog
     {
         private FileInfo _changelogFile;
-        private MarkdownDocument _changelog;
+        private readonly MarkdownDocument _changelog;
 
         private Changelog(FileInfo changelogFile)
         {
@@ -20,10 +20,11 @@ namespace Ubiety.ConventionalVersion
         public string UpdateChangelog(Project project, Repository repository)
         {
             var currentDate = DateTimeOffset.Now;
-            var origin = repository.Network.Remotes["origin"];
 
             _changelog.AddElement(new MdHeader("Change Log", HeaderWeight.One));
-            _changelog.AddString($"All notable changes to this project will be documented in this file. See {new MdLink(origin.Name, origin.Url)} for commit guidelines.");
+            _changelog.AddString($"All notable changes to this project will be documented in this file. See {new MdLink("Conventional Commits", "https://conventionalcommits.org")} for commit guidelines.");
+            _changelog.AddElement(new MdRule());
+            _changelog.AddNewLines(2);
 
             return _changelog;
         }
