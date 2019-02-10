@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiety.ConventionalVersion"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiety.Console.Ui", "Ubiety.Console.Ui\Ubiety.Console.Ui.csproj", "{8875EB07-80AC-4A58-B70A-EFE9AE3F7A9B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiety.Markdown", "Ubiety.Markdown\Ubiety.Markdown.csproj", "{A971A170-0FF4-43F4-A9D2-EDC391965F5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8875EB07-80AC-4A58-B70A-EFE9AE3F7A9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8875EB07-80AC-4A58-B70A-EFE9AE3F7A9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8875EB07-80AC-4A58-B70A-EFE9AE3F7A9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A971A170-0FF4-43F4-A9D2-EDC391965F5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A971A170-0FF4-43F4-A9D2-EDC391965F5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A971A170-0FF4-43F4-A9D2-EDC391965F5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A971A170-0FF4-43F4-A9D2-EDC391965F5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
