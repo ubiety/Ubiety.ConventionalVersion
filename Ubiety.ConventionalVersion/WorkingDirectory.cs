@@ -122,13 +122,48 @@ namespace Ubiety.ConventionalVersion
         public WorkingDirectory UpdateChangelog(bool dryRun)
         {
             var changelog = Changelog.DiscoverChangelog(_workingDirectoryName);
+            var changelogText = changelog.UpdateChangelog(_projects.First(), _repository);
 
             if (dryRun)
             {
-                Information(changelog.UpdateChangelog(_projects.First(), _repository));
+                Information(changelogText);
+            }
+            else
+            {
+                changelog.WriteFile(changelogText);
             }
 
-            return default;
+            Commands.Stage(_repository, changelog.FilePath);
+            Step("Updated CHANGELOG.md");
+
+            return this;
+        }
+
+        public void CommitChanges(bool skipCommit)
+        {
+            if (skipCommit)
+            {
+                Information($"Commit and tagging of version was skipped. Tag release as `{_projects.First().Version.Tag}` so versionit can detect the next version.");
+                return;
+            }
+
+            foreach (var project in _projects)
+            {
+                Commands.Stage(_repository, project.File);
+            }
+
+            var firstProject = _projects.First();
+
+            var author = _repository.Config.BuildSignature(DateTimeOffset.Now);
+            var commitMessage = $"chore(release): {firstProject.Version}";
+
+            var versionCommit = _repository.Commit(commitMessage, author, author);
+            Step("Committed changes to projects and CHANGELOG.md");
+            _ = _repository.Tags.Add(firstProject.Version.Tag, versionCommit, author, $"{firstProject.Version.Version}");
+            Step($"Tagged new version as {firstProject.Version.Tag}");
+
+            Information("");
+            Information("Run `git push --follow-tags origin master` to push changes and tags to origin");
         }
     }
 }

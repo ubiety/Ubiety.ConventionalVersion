@@ -12,12 +12,14 @@ namespace Ubiety.ConventionalVersion
 {
     public class Changelog
     {
-        private FileInfo _changelogFile;
+        private readonly FileInfo _changelogFile;
 
         private Changelog(FileInfo changelogFile)
         {
             _changelogFile = changelogFile;
         }
+
+        public string FilePath { get => _changelogFile.FullName; }
 
         public string UpdateChangelog(Project project, Repository repository)
         {
@@ -33,7 +35,7 @@ namespace Ubiety.ConventionalVersion
 
             changelog.AddText($"<a name=\"{project.Version}\"></a>");
             changelog.AddElement(new MdHeader(
-                $"{new MdLink($"{project.Version}", $"{gitUrl.CompareUrl}/{project.Version.PreviousTag}...{project.Version.Tag}/")} ({currentDate.Date.ToString("yy-MM-dd", DateTimeFormatInfo.InvariantInfo)})",
+                $"{new MdLink($"{project.Version}", $"{gitUrl.CompareUrl}/{project.Version.PreviousTag}...{project.Version.Tag}/")} ({currentDate.Date.ToString("yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo)})",
                 HeaderWeight.Two));
             changelog.AddNewLines();
 
