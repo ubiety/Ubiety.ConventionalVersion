@@ -4,12 +4,13 @@ namespace Ubiety.ConventionalVersion
 {
     public class ProjectVersion
     {
-        private bool _isPreview;
+        private readonly bool _isPreview;
 
-        public ProjectVersion(Version version, bool isPreview = false)
+        public ProjectVersion(Version version, bool isPreview = false, string previousTag = "")
         {
             Version = version;
             _isPreview = isPreview;
+            PreviousTag = previousTag;
         }
 
         public ProjectVersion(string version)
@@ -34,29 +35,17 @@ namespace Ubiety.ConventionalVersion
 
         public ProjectVersion IncrementBuild(bool isMaster)
         {
-            PreviousTag = Tag;
-            Version = new Version(Version.Major, Version.Minor, Version.Build + 1);
-            _isPreview = !isMaster;
-
-            return this;
+            return new ProjectVersion(new Version(Version.Major, Version.Minor, Version.Build + 1), !isMaster, Tag);
         }
 
         public ProjectVersion IncrementMinor(bool isMaster)
         {
-            PreviousTag = Tag;
-            Version = new Version(Version.Major, Version.Minor + 1, 0);
-            _isPreview = !isMaster;
-
-            return this;
+            return new ProjectVersion(new Version(Version.Major, Version.Minor + 1, 0), !isMaster, Tag);
         }
 
         public ProjectVersion IncrementMajor(bool isMaster)
         {
-            PreviousTag = Tag;
-            Version = new Version(Version.Major + 1, 0, 0);
-            _isPreview = !isMaster;
-
-            return this;
+            return new ProjectVersion(new Version(Version.Major + 1, 0, 0), !isMaster, Tag);
         }
 
         public ProjectVersion ChangeSuffix(bool isMaster)

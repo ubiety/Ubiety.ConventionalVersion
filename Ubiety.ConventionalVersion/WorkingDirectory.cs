@@ -116,16 +116,6 @@ namespace Ubiety.ConventionalVersion
                 }
             }
 
-            Information("");
-
-            Information($"VERSIONIT_NUGET_VERSION: {nextVersion}");
-            Environment.SetEnvironmentVariable("VERSIONIT_NUGET_VERSION", nextVersion);
-
-            Information($"VERSIONIT_CI_VERSION: {nextVersion.Version}");
-            Environment.SetEnvironmentVariable("VERSIONIT_CI_VERSION", nextVersion.Version.ToString());
-
-            Information("");
-
             return this;
         }
 
