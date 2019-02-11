@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file. See [Conven
 ---
 
 
-<a name="0.3.0-preview"></a>
+<a name="0.4.0-preview"></a>
+## [0.4.0-preview](https://github.com/ubiety/Ubiety.ConventionalVersion/compare/v0.3.0-preview...v0.4.0-preview/) (2019-02-10)
+
+### Features
+
+  * update package with command name
+
+
 ## [0.3.0-preview](https://github.com/ubiety/Ubiety.ConventionalVersion/compare/v0.2.0-preview...v0.3.0-preview/) (2019-02-10)
 
 ### Bug Fixes
