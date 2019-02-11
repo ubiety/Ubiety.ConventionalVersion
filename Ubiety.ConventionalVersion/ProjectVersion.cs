@@ -23,7 +23,7 @@ namespace Ubiety.ConventionalVersion
             else
             {
                 _isPreview = true;
-                Version = new Version(version.Substring(0, index - 1));
+                Version = new Version(version.Substring(0, index));
             }
         }
 
