@@ -38,7 +38,8 @@ namespace Ubiety.ConventionalVersion
             WorkingDirectory
                 .DiscoverRepository(ProjectPath)
                 .UpdateVersion(SkipDirty, ReleaseAs, DryRun)
-                .UpdateChangelog(DryRun);
+                .UpdateChangelog(DryRun)
+                .CommitChanges(SkipCommit);
 
             return 0;
         }
