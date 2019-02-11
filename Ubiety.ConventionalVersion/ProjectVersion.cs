@@ -29,7 +29,7 @@ namespace Ubiety.ConventionalVersion
 
         public Version Version { get; set; }
 
-        public string Tag { get => $"v{Version}"; }
+        public string Tag { get => $"v{ToString()}"; }
 
         public string PreviousTag { get; private set; }
 

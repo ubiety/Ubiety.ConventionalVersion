@@ -103,12 +103,13 @@ namespace Ubiety.ConventionalVersion
             {
                 if (nextVersion != project.Version)
                 {
+                    Step($"Bumping version from {project.Version} to {nextVersion} in project {project.File}");
+                    project.Version = nextVersion;
                     if (!dryRun)
                     {
                         project.SetVersion(nextVersion);
                         Commands.Stage(_repository, project.File);
                     }
-                    Step($"Bumping version from {project.Version} to {nextVersion} in project {project.File}");
                 }
                 else
                 {

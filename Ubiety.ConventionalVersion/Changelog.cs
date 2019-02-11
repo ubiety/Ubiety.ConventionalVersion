@@ -36,7 +36,7 @@ namespace Ubiety.ConventionalVersion
 
             changelog.AddText($"<a name=\"{project.Version}\"></a>");
             changelog.AddElement(new MdHeader(
-                $"{new MdLink($"{project.Version}", $"{gitUrl.CompareUrl}/{project.Version.PreviousTag}...{project.Version.Tag}/")} ({currentDate.Date.ToString("yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo)})",
+                $"{new MdLink($"{project.Version}", $"{gitUrl.CompareUrl}/{(string.IsNullOrEmpty(project.Version.PreviousTag) ? "master" : project.Version.PreviousTag)}...{project.Version.Tag}/")} ({currentDate.Date.ToString("yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo)})",
                 HeaderWeight.Two));
             changelog.AddNewLines();
 
