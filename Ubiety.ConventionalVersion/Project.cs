@@ -22,7 +22,7 @@ namespace Ubiety.ConventionalVersion
 
         public string File { get; }
 
-        public ProjectVersion Version { get; }
+        public ProjectVersion Version { get; private set; }
 
         public IEnumerable<ConventionalCommit> Commits { get; private set; }
 
@@ -81,7 +81,7 @@ namespace Ubiety.ConventionalVersion
         {
             XDocument document = XDocument.Load(File);
             var versionElement = document.XPathSelectElement(versionXPath);
-            versionElement.Value = nextVersion;
+            versionElement.Value = Version = nextVersion;
             document.Save(File);
         }
 

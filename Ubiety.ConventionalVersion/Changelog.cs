@@ -29,6 +29,7 @@ namespace Ubiety.ConventionalVersion
             var gitUrl = new GitUrl(repository.Network.Remotes["origin"].Url);
 
             changelog.AddElement(new MdHeader("Change Log", HeaderWeight.One));
+            changelog.AddNewLines();
             changelog.AddText($"All notable changes to this project will be documented in this file. See {new MdLink("Conventional Commits", "https://conventionalcommits.org")} for commit guidelines.");
             changelog.AddElement(new MdRule());
             changelog.AddNewLines(2);
