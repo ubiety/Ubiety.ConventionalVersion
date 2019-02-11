@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -23,7 +24,13 @@ namespace Ubiety.ConventionalVersion
 
         public ProjectVersion Version { get; }
 
-        public IEnumerable<Commit> Commits { get; private set; }
+        public IEnumerable<ConventionalCommit> Commits { get; private set; }
+
+        public IEnumerable<ConventionalCommit> FeatureCommits { get => Commits.Where(commit => "feat".Equals(commit.Type, StringComparison.InvariantCultureIgnoreCase)); }
+        
+        public IEnumerable<ConventionalCommit> BugCommits { get => Commits.Where(commit => "fix".Equals(commit.Type, StringComparison.InvariantCultureIgnoreCase)); }
+
+        public IEnumerable<ConventionalCommit> BreakingCommits { get => Commits.Where(commit => commit.Notes.Any(note => note.Title.Equals("BREAKING CHANGE", StringComparison.InvariantCulture))); }
 
         public static IEnumerable<Project> DiscoverProjects(string directory)
         {
@@ -60,12 +67,12 @@ namespace Ubiety.ConventionalVersion
         public ProjectVersion GetNextVersion(Repository repository)
         {
             var versionTag = repository.GetVersionTag(Version);
-            Commits = repository.GetCommitsSinceLastVersion(versionTag);
+            var commits = repository.GetCommitsSinceLastVersion(versionTag);
 
             var isMaster = repository.Head.FriendlyName == "master";
 
-            var conventionalCommits = CommitParser.Parse(Commits);
-            var incrementStrategy = VersionIncrementStrategy.Create(conventionalCommits, isMaster);
+            Commits = CommitParser.Parse(commits);
+            var incrementStrategy = VersionIncrementStrategy.Create(Commits, isMaster);
 
             return incrementStrategy.NextVersion(Version);
         }
