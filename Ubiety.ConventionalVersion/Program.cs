@@ -25,6 +25,9 @@ namespace Ubiety.ConventionalVersion
         [Option("--silent", Description = "Disable console output")]
         public bool Silent { get; set; }
 
+        [Option("--skip-commit", Description = "Skip committing changes after update")]
+        public bool SkipCommit { get; set; }
+
         [Argument(0, Description = "Git project directory or csproj file, will use current directory if not supplied")]
         public string ProjectPath { get; set; }
 
@@ -35,7 +38,8 @@ namespace Ubiety.ConventionalVersion
             WorkingDirectory
                 .DiscoverRepository(ProjectPath)
                 .UpdateVersion(SkipDirty, ReleaseAs, DryRun)
-                .UpdateChangelog(DryRun);
+                .UpdateChangelog(DryRun)
+                .CommitChanges(SkipCommit);
 
             return 0;
         }

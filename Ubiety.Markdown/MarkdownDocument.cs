@@ -17,7 +17,7 @@ namespace Ubiety.Markdown
             _document.AppendLine();
         }
 
-        public void AddString(string value)
+        public void AddText(string value)
         {
             _document.AppendLine(value);
         }
