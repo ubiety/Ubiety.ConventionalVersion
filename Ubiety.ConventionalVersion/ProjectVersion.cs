@@ -27,11 +27,11 @@ namespace Ubiety.ConventionalVersion
             }
         }
 
-        public Version Version { get; set; }
+        public Version Version { get; }
 
-        public string Tag { get => $"v{ToString()}"; }
+        public string Tag => $"v{ToString()}";
 
-        public string PreviousTag { get; private set; }
+        public string PreviousTag { get; }
 
         public ProjectVersion IncrementBuild(bool isMaster)
         {
@@ -50,12 +50,7 @@ namespace Ubiety.ConventionalVersion
 
         public ProjectVersion ChangeSuffix(bool isMaster)
         {
-            if (!_isPreview)
-            {
-                return new ProjectVersion(Version, _isPreview);
-            }
-
-            return new ProjectVersion(Version, !isMaster);
+            return !_isPreview ? new ProjectVersion(Version, _isPreview) : new ProjectVersion(Version, !isMaster);
         }
 
         public static implicit operator string(ProjectVersion version)
@@ -65,10 +60,7 @@ namespace Ubiety.ConventionalVersion
 
         public static bool operator ==(ProjectVersion left, ProjectVersion right)
         {
-            if (left is null)
-            {
-                return right is null;
-            }
+            if (left is null) return right is null;
 
             return left.Equals(right);
         }
@@ -85,12 +77,7 @@ namespace Ubiety.ConventionalVersion
 
         public override bool Equals(object obj)
         {
-            if (obj is null)
-            {
-                return false;
-            }
-
-            return Version.Equals(((ProjectVersion)obj).Version);
+            return !(obj is null) && Version.Equals(((ProjectVersion) obj).Version);
         }
 
         public override int GetHashCode()

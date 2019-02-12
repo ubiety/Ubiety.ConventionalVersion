@@ -13,26 +13,19 @@ namespace Ubiety.Console.Ui
             Environment.Exit(exitCode);
         }
 
+        public void WriteLine(string message, Color color, Formatter[] formatters = null)
+        {
+            if (Verbosity == VerbosityLevel.Silent) return;
+
+            if (formatters is null)
+                Colorful.Console.WriteLine(message, color);
+            else
+                Colorful.Console.WriteLineFormatted(message, color, formatters);
+        }
+
         public void WriteLine(string message, Formatter[] formatters = null)
         {
             WriteLine(message, Color.Empty, formatters);
-        }
-
-        public void WriteLine(string message, Color color, Formatter[] formatters = null)
-        {
-            if (Verbosity == VerbosityLevel.Silent)
-            {
-                return;
-            }
-
-            if (formatters is null)
-            {
-                Colorful.Console.WriteLine(message, color);
-            }
-            else
-            {
-                Colorful.Console.WriteLineFormatted(message, color, formatters);
-            }
         }
     }
 }

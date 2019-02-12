@@ -48,7 +48,6 @@ namespace Ubiety.ConventionalVersion
             foreach (var commit in commits)
             {
                 if (!string.IsNullOrEmpty(commit.Type))
-                {
                     switch (commit.Type)
                     {
                         case "feat":
@@ -57,15 +56,11 @@ namespace Ubiety.ConventionalVersion
                         case "fix":
                             impact = MaxImpact(impact, VersionImpact.Patch);
                             break;
-                        default:
-                            break;
                     }
-                }
 
-                if (commit.Notes.Any(note => note.Title.Equals("BREAKING CHANGE", StringComparison.InvariantCultureIgnoreCase)))
-                {
+                if (commit.Notes.Any(note =>
+                    note.Title.Equals("BREAKING CHANGE", StringComparison.InvariantCultureIgnoreCase)))
                     impact = MaxImpact(impact, VersionImpact.Major);
-                }
             }
 
             return new VersionIncrementStrategy(impact, isMaster);
@@ -73,7 +68,7 @@ namespace Ubiety.ConventionalVersion
 
         private static VersionImpact MaxImpact(VersionImpact left, VersionImpact right)
         {
-            return (VersionImpact)Math.Max((int)left, (int)right);
+            return (VersionImpact) Math.Max((int) left, (int) right);
         }
     }
 }

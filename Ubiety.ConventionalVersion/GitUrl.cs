@@ -4,26 +4,23 @@ namespace Ubiety.ConventionalVersion
 {
     public class GitUrl
     {
-        private readonly string _url;
-        private readonly Regex urlRegex = new Regex("^(?<user>.*)\\@(?<server>.*)\\:(?<org>.*)\\/(?<repo>.*)\\.git$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline);
+        private readonly Regex _urlRegex = new Regex("^(?<user>.*)\\@(?<server>.*)\\:(?<org>.*)\\/(?<repo>.*)\\.git$",
+            RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline);
 
         public GitUrl(string url)
         {
-            _url = url;
-            var matches = urlRegex.Match(_url);
+            var matches = _urlRegex.Match(url);
 
-            if (matches.Success)
-            {
-                Host = matches.Groups["server"].Value;
-                Organization = matches.Groups["org"].Value;
-                Repository = matches.Groups["repo"].Value;
-            }
+            if (!matches.Success) return;
+            Host = matches.Groups["server"].Value;
+            Organization = matches.Groups["org"].Value;
+            Repository = matches.Groups["repo"].Value;
         }
 
-        public string Host { get; private set; }
-        public string Organization { get; private set; }
-        public string Repository { get; private set; }
-        public string WebUrl { get => $"https://{Host}/{Organization}/{Repository}"; }
-        public string CompareUrl { get => $"{WebUrl}/compare"; }
+        public string Host { get; }
+        public string Organization { get; }
+        public string Repository { get; }
+        public string WebUrl => $"https://{Host}/{Organization}/{Repository}";
+        public string CompareUrl => $"{WebUrl}/compare";
     }
 }
