@@ -2,7 +2,7 @@
   "profiles": {
     "Ubiety.ConventionalVersion": {
       "commandName": "Project",
-      "commandLineArgs": "-d --skip-dirty"
+      "commandLineArgs": "-d --skip-dirty --skip-commit"
     }
   }
 }
