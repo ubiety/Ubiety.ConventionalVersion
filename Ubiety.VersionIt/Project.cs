@@ -27,7 +27,7 @@ namespace Ubiety.ConventionalVersion
 
         public IEnumerable<ConventionalCommit> Commits { get; private set; }
 
-        public IEnumerable<ConventionalCommit> BreakingCommits => Commits.Where(commit =>
+        public IEnumerable<ConventionalCommit> BreakingCommits => Commits?.Where(commit =>
             commit.Notes.Any(note => note.Title.Equals("BREAKING CHANGE", StringComparison.InvariantCulture)));
 
         public static IEnumerable<Project> DiscoverProjects(string directory)
@@ -41,7 +41,8 @@ namespace Ubiety.ConventionalVersion
 
         public static bool IsVersionable(string projectFile)
         {
-            return GetVersion(projectFile) != null;
+            var version = GetVersion(projectFile);
+            return !(version is null);
         }
 
         public static ProjectVersion GetVersion(string projectFile)
@@ -49,7 +50,9 @@ namespace Ubiety.ConventionalVersion
             var document = XDocument.Load(projectFile);
             var versionElement = document.XPathSelectElement(VersionXPath);
 
+#pragma warning disable SA1000 // Keywords must be spaced correctly
             return versionElement is null ? default : new ProjectVersion(versionElement.Value);
+#pragma warning restore SA1000 // Keywords must be spaced correctly
         }
 
         public static Project Create(string projectFile)

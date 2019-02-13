@@ -94,6 +94,8 @@ namespace Ubiety.ConventionalVersion
             {
                 changelog.AddElement(new MdListItem(commit.Subject));
             }
+
+            changelog.AddNewLines();
         }
     }
 }
