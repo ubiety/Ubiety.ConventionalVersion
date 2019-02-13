@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Ubiety.ConventionalVersion.Commits;
+using Ubiety.VersionIt.Commits.Rules;
 
 namespace Ubiety.ConventionalVersion
 {
@@ -47,25 +48,19 @@ namespace Ubiety.ConventionalVersion
 
             foreach (var commit in commits)
             {
-                if (!string.IsNullOrEmpty(commit.Type))
+                switch (commit.Type)
                 {
-                    switch (commit.Type)
-                    {
-                        case "feat":
-                            impact = MaxImpact(impact, VersionImpact.Minor);
-                            break;
-                        case "fix":
-                            impact = MaxImpact(impact, VersionImpact.Patch);
-                            break;
-                        default:
-                            break;
-                    }
+                    case ConventionalTypes.feat:
+                        impact = MaxImpact(impact, VersionImpact.Minor);
+                        break;
+                    case ConventionalTypes.fix:
+                        impact = MaxImpact(impact, VersionImpact.Patch);
+                        break;
                 }
 
-                if (commit.Notes.Any(note => note.Title.Equals("BREAKING CHANGE", StringComparison.InvariantCultureIgnoreCase)))
-                {
+                if (commit.Notes.Any(note =>
+                    note.Title.Equals("BREAKING CHANGE", StringComparison.InvariantCultureIgnoreCase)))
                     impact = MaxImpact(impact, VersionImpact.Major);
-                }
             }
 
             return new VersionIncrementStrategy(impact, isMaster);

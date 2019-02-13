@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28531.58
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiety.ConventionalVersion", "Ubiety.ConventionalVersion\Ubiety.ConventionalVersion.csproj", "{1F161663-9ACD-4C04-B8A7-BB6F8BA7C5D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiety.VersionIt", "Ubiety.ConventionalVersion\Ubiety.VersionIt.csproj", "{1F161663-9ACD-4C04-B8A7-BB6F8BA7C5D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiety.Console.Ui", "Ubiety.Console.Ui\Ubiety.Console.Ui.csproj", "{8875EB07-80AC-4A58-B70A-EFE9AE3F7A9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiety.Console.Ui", "Ubiety.Console.Ui\Ubiety.Console.Ui.csproj", "{8875EB07-80AC-4A58-B70A-EFE9AE3F7A9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiety.Markdown", "Ubiety.Markdown\Ubiety.Markdown.csproj", "{A971A170-0FF4-43F4-A9D2-EDC391965F5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiety.Markdown", "Ubiety.Markdown\Ubiety.Markdown.csproj", "{A971A170-0FF4-43F4-A9D2-EDC391965F5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

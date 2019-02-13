@@ -24,10 +24,7 @@ namespace Ubiety.Markdown
 
         public void AddNewLines(int lines = 1)
         {
-            for (int i = 0; i < lines; i++)
-            {
-                _document.AppendLine();
-            }
+            for (var i = 0; i < lines; i++) _document.AppendLine();
         }
 
         public static implicit operator string(MarkdownDocument document)

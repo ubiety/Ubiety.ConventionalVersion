@@ -7,6 +7,7 @@ using Ubiety.ConventionalVersion.Commits;
 using Ubiety.ConventionalVersion.Extensions;
 using Ubiety.Markdown;
 using Ubiety.Markdown.Elements;
+using Ubiety.VersionIt.Commits.Rules;
 
 namespace Ubiety.ConventionalVersion
 {
@@ -19,9 +20,9 @@ namespace Ubiety.ConventionalVersion
             _changelogFile = changelogFile;
         }
 
-        public string FilePath { get => _changelogFile.FullName; }
+        public string FilePath => _changelogFile.FullName;
 
-        public string UpdateChangelog(Project project, Repository repository)
+        public static string UpdateChangelog(Project project, Repository repository)
         {
             var currentDate = DateTimeOffset.Now;
             var changelog = new MarkdownDocument();
@@ -30,7 +31,8 @@ namespace Ubiety.ConventionalVersion
 
             changelog.AddElement(new MdHeader("Change Log", HeaderWeight.One));
             changelog.AddNewLines();
-            changelog.AddText($"All notable changes to this project will be documented in this file. See {new MdLink("Conventional Commits", "https://conventionalcommits.org")} for commit guidelines.");
+            changelog.AddText(
+                $"All notable changes to this project will be documented in this file. See {new MdLink("Conventional Commits", "https://conventionalcommits.org")} for commit guidelines.");
             changelog.AddElement(new MdRule());
             changelog.AddNewLines(2);
 
@@ -40,18 +42,15 @@ namespace Ubiety.ConventionalVersion
                 HeaderWeight.Two));
             changelog.AddNewLines();
 
-            if (project.BugCommits.IsAny())
+            foreach (var rule in ConventionalRules.Rules)
             {
-                AddCommits("Bug Fixes", project.BugCommits, changelog);
-                changelog.AddNewLines();
+                var commits = project.GetCommits(rule.Key);
+                if (commits.IsAny())
+                {
+                    AddCommits(rule.Value.Header, commits, changelog);
+                }
             }
-
-            if (project.FeatureCommits.IsAny())
-            {
-                AddCommits("Features", project.FeatureCommits, changelog);
-                changelog.AddNewLines();
-            }
-
+            
             if (project.BreakingCommits.IsAny())
             {
                 AddCommits("Breaking Changes", project.BreakingCommits, changelog);
@@ -69,10 +68,7 @@ namespace Ubiety.ConventionalVersion
 
                 var firstVersionIndex = currentChangelog.IndexOf("##", StringComparison.InvariantCulture);
 
-                if (firstVersionIndex >= 0)
-                {
-                    currentChangelog = currentChangelog.Substring(firstVersionIndex);
-                }
+                if (firstVersionIndex >= 0) currentChangelog = currentChangelog.Substring(firstVersionIndex);
 
                 changelog += $"\n{currentChangelog}";
             }
@@ -87,14 +83,12 @@ namespace Ubiety.ConventionalVersion
             return new Changelog(changelogFile);
         }
 
-        private void AddCommits(string header, IEnumerable<ConventionalCommit> commits, MarkdownDocument changelog)
+        private static void AddCommits(string header, IEnumerable<ConventionalCommit> commits,
+            MarkdownDocument changelog)
         {
             changelog.AddElement(new MdHeader(header, HeaderWeight.Three));
             changelog.AddNewLines();
-            foreach (var commit in commits)
-            {
-                changelog.AddElement(new MdListItem(commit.Subject));
-            }
+            foreach (var commit in commits) changelog.AddElement(new MdListItem(commit.Subject));
         }
     }
 }

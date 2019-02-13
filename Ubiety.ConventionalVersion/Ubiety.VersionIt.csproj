@@ -4,10 +4,19 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <PackAsTool>true</PackAsTool>
-    <ToolCommandName>versionit</ToolCommandName>
+    <ToolCommandName>dotnet-versionit</ToolCommandName>
     <PackageOutputPath>../nupkg</PackageOutputPath>
     <LangVersion>latest</LangVersion>
-    <Version>0.4.0-preview</Version>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Title>VersionIt</Title>
+    <Authors>coder2000</Authors>
+    <PackageDescription>VersionIt is for automatically generating versions and changelog based on conventional commits.</PackageDescription>
+    <PackageLicenseUrl>https://github.com/ubiety/Ubiety.VersionIt/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/ubiety/Ubiety.VersionIt</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ubiety/Ubiety.VersionIt</RepositoryUrl>
+    <PackageTags>versioning;conventional;commits;git;changelog</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Colorful.Console" Version="1.2.9" />

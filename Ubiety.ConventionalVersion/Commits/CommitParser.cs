@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using LibGit2Sharp;
+using Ubiety.VersionIt.Commits.Rules;
 
 namespace Ubiety.ConventionalVersion.Commits
 {
     public static class CommitParser
     {
-        private static readonly Regex headerPattern = new Regex("^(?<type>\\w*)(?:\\((?<scope>.*)\\))?: (?<subject>.*)$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline);
-        private static readonly string[] noteKeywords = new[] { "BREAKING CHANGE" };
+        private static readonly Regex HeaderPattern =
+            new Regex("^(?<type>\\w*)(?:\\((?<scope>.*)\\))?: (?<subject>.*)$",
+                RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline);
+
+        private static readonly string[] NoteKeywords = { "BREAKING CHANGE" };
 
         public static ConventionalCommit Parse(Commit commit)
         {
@@ -24,38 +28,34 @@ namespace Ubiety.ConventionalVersion.Commits
 
             var header = commitLines.FirstOrDefault();
 
-            if (string.IsNullOrEmpty(header))
-            {
-                return conventionalCommit;
-            }
+            if (string.IsNullOrEmpty(header)) return conventionalCommit;
 
-            var headerParts = headerPattern.Match(header);
+            var headerParts = HeaderPattern.Match(header);
 
             if (headerParts.Success)
             {
                 conventionalCommit.Scope = headerParts.Groups["scope"].Value;
-                conventionalCommit.Type = headerParts.Groups["type"].Value;
                 conventionalCommit.Subject = headerParts.Groups["subject"].Value;
+
+                conventionalCommit.Type = ConventionalRules
+                    .Rules
+                    .FirstOrDefault(rule => rule.Value.Type.Equals(
+                        headerParts.Groups["type"].Value,
+                        StringComparison.InvariantCulture)).Key;
             }
             else
             {
                 conventionalCommit.Subject = header;
             }
 
-            for (int i = 1; i < commitLines.Count(); i++)
-            {
-                foreach (var keyword in noteKeywords)
-                {
+            for (var i = 1; i < commitLines.Count(); i++)
+                foreach (var keyword in NoteKeywords)
                     if (commitLines[i].StartsWith(keyword, StringComparison.InvariantCulture))
-                    {
                         conventionalCommit.Notes.Add(new CommitNote
                         {
                             Title = keyword,
                             Text = commitLines[i].Substring($"{keyword}:".Length).TrimStart()
                         });
-                    }
-                }
-            }
 
             return conventionalCommit;
         }

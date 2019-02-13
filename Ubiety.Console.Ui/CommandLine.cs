@@ -5,7 +5,7 @@ namespace Ubiety.Console.Ui
 {
     public static class CommandLine
     {
-        public static IPlatform Platform { get; } = new Platform { Verbosity = VerbosityLevel.All };
+        public static IPlatform Platform { get; } = new Platform {Verbosity = VerbosityLevel.All};
 
         public static void Exit(string message, int exitCode)
         {
@@ -20,8 +20,8 @@ namespace Ubiety.Console.Ui
 
         public static void Step(string message)
         {
-            string stepMessage = "{0} {1}";
-            var stepFormatters = new Formatter[]
+            var stepMessage = "{0} {1}";
+            var stepFormatters = new[]
             {
                 new Formatter("√", Color.Green),
                 new Formatter(message, Color.LightGray)

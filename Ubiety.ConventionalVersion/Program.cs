@@ -4,15 +4,10 @@ using Ubiety.Console.Ui;
 namespace Ubiety.ConventionalVersion
 {
     [Command(Name = "versionit", Description = "Version your dotnet app based on your commits")]
-    [HelpOption()]
+    [HelpOption]
     [VersionOptionFromMember(MemberName = "Version")]
     public class Program
     {
-        static int Main(string[] args)
-        {
-            return CommandLineApplication.Execute<Program>(args);
-        }
-
         [Option(Description = "Execute without actually committing")]
         public bool DryRun { get; set; }
 
@@ -31,6 +26,13 @@ namespace Ubiety.ConventionalVersion
         [Argument(0, Description = "Git project directory or csproj file, will use current directory if not supplied")]
         public string ProjectPath { get; set; }
 
+        private string Version { get; } = typeof(Program).Assembly.GetName().Version.ToString();
+
+        private static int Main(string[] args)
+        {
+            return CommandLineApplication.Execute<Program>(args);
+        }
+
         private int OnExecute()
         {
             CommandLine.Platform.Verbosity = Silent ? VerbosityLevel.Silent : VerbosityLevel.All;
@@ -43,7 +45,5 @@ namespace Ubiety.ConventionalVersion
 
             return 0;
         }
-
-        private string Version { get; } = typeof(Program).Assembly.GetName().Version.ToString();
     }
 }

@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file. See [Conven
 ---
 
 
-<a name="0.4.0-preview"></a>
+<a name="1.0.0"></a>
+## [1.0.0](https://github.com/ubiety/Ubiety.ConventionalVersion/compare/v0.4.0-preview...v1.0.0/) (2019-02-10)
+
+### Breaking Changes
+
+  * Merge pull request #1 from ubiety/develop
+
+
 ## [0.4.0-preview](https://github.com/ubiety/Ubiety.ConventionalVersion/compare/v0.3.0-preview...v0.4.0-preview/) (2019-02-10)
 
 ### Features

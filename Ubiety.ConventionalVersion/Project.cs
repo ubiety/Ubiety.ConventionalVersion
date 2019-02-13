@@ -7,12 +7,13 @@ using System.Xml.XPath;
 using LibGit2Sharp;
 using Ubiety.ConventionalVersion.Commits;
 using Ubiety.ConventionalVersion.Extensions;
+using Ubiety.VersionIt.Commits.Rules;
 
 namespace Ubiety.ConventionalVersion
 {
     public class Project
     {
-        private const string versionXPath = "./Project/PropertyGroup/Version";
+        private const string VersionXPath = "./Project/PropertyGroup/Version";
 
         private Project(string file, ProjectVersion version)
         {
@@ -26,11 +27,13 @@ namespace Ubiety.ConventionalVersion
 
         public IEnumerable<ConventionalCommit> Commits { get; private set; }
 
-        public IEnumerable<ConventionalCommit> FeatureCommits { get => Commits.Where(commit => "feat".Equals(commit.Type, StringComparison.InvariantCultureIgnoreCase)); }
-        
-        public IEnumerable<ConventionalCommit> BugCommits { get => Commits.Where(commit => "fix".Equals(commit.Type, StringComparison.InvariantCultureIgnoreCase)); }
+        public IEnumerable<ConventionalCommit> BreakingCommits => Commits.Where(commit =>
+            commit.Notes.Any(note => note.Title.Equals("BREAKING CHANGE", StringComparison.InvariantCulture)));
 
-        public IEnumerable<ConventionalCommit> BreakingCommits { get => Commits.Where(commit => commit.Notes.Any(note => note.Title.Equals("BREAKING CHANGE", StringComparison.InvariantCulture))); }
+        public IEnumerable<ConventionalCommit> GetCommits(ConventionalTypes type)
+        {
+            return Commits.Where(commit => commit.Type == type);
+        }
 
         public static IEnumerable<Project> DiscoverProjects(string directory)
         {
@@ -43,25 +46,15 @@ namespace Ubiety.ConventionalVersion
 
         public static bool IsVersionable(string projectFile)
         {
-            if (GetVersion(projectFile) == null)
-            {
-                return false;
-            }
-
-            return true;
+            return GetVersion(projectFile) != null;
         }
 
         public static ProjectVersion GetVersion(string projectFile)
         {
-            XDocument document = XDocument.Load(projectFile);
-            var versionElement = document.XPathSelectElement(versionXPath);
+            var document = XDocument.Load(projectFile);
+            var versionElement = document.XPathSelectElement(VersionXPath);
 
-            if (versionElement is null)
-            {
-                return default;
-            }
-
-            return new ProjectVersion(versionElement.Value);
+            return versionElement is null ? default : new ProjectVersion(versionElement.Value);
         }
 
         public ProjectVersion GetNextVersion(Repository repository)
@@ -79,8 +72,8 @@ namespace Ubiety.ConventionalVersion
 
         public void SetVersion(ProjectVersion nextVersion)
         {
-            XDocument document = XDocument.Load(File);
-            var versionElement = document.XPathSelectElement(versionXPath);
+            var document = XDocument.Load(File);
+            var versionElement = document.XPathSelectElement(VersionXPath);
             versionElement.Value = nextVersion;
             document.Save(File);
         }
