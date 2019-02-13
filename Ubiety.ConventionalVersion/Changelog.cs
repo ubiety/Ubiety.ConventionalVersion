@@ -7,6 +7,7 @@ using Ubiety.ConventionalVersion.Commits;
 using Ubiety.ConventionalVersion.Extensions;
 using Ubiety.Markdown;
 using Ubiety.Markdown.Elements;
+using Ubiety.VersionIt.Commits.Rules;
 
 namespace Ubiety.ConventionalVersion
 {
@@ -41,18 +42,12 @@ namespace Ubiety.ConventionalVersion
                 HeaderWeight.Two));
             changelog.AddNewLines();
 
-            if (project.BugCommits.IsAny())
+            foreach (var rule in ConventionalRules.Rules)
             {
-                AddCommits("Bug Fixes", project.BugCommits, changelog);
-                changelog.AddNewLines();
+                var commits = project.GetCommits(rule.Key);
+                AddCommits(rule.Value.Header, commits, changelog);
             }
-
-            if (project.FeatureCommits.IsAny())
-            {
-                AddCommits("Features", project.FeatureCommits, changelog);
-                changelog.AddNewLines();
-            }
-
+            
             if (project.BreakingCommits.IsAny())
             {
                 AddCommits("Breaking Changes", project.BreakingCommits, changelog);

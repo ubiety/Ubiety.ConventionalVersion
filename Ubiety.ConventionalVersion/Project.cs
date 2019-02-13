@@ -7,6 +7,7 @@ using System.Xml.XPath;
 using LibGit2Sharp;
 using Ubiety.ConventionalVersion.Commits;
 using Ubiety.ConventionalVersion.Extensions;
+using Ubiety.VersionIt.Commits.Rules;
 
 namespace Ubiety.ConventionalVersion
 {
@@ -26,14 +27,13 @@ namespace Ubiety.ConventionalVersion
 
         public IEnumerable<ConventionalCommit> Commits { get; private set; }
 
-        public IEnumerable<ConventionalCommit> FeatureCommits => Commits.Where(commit =>
-            "feat".Equals(commit.Type, StringComparison.InvariantCultureIgnoreCase));
-
-        public IEnumerable<ConventionalCommit> BugCommits => Commits.Where(commit =>
-            "fix".Equals(commit.Type, StringComparison.InvariantCultureIgnoreCase));
-
         public IEnumerable<ConventionalCommit> BreakingCommits => Commits.Where(commit =>
             commit.Notes.Any(note => note.Title.Equals("BREAKING CHANGE", StringComparison.InvariantCulture)));
+
+        public IEnumerable<ConventionalCommit> GetCommits(ConventionalTypes type)
+        {
+            return Commits.Where(commit => commit.Type == type);
+        }
 
         public static IEnumerable<Project> DiscoverProjects(string directory)
         {

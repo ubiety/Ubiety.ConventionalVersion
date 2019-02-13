@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using LibGit2Sharp;
+using Ubiety.VersionIt.Commits.Rules;
 
 namespace Ubiety.ConventionalVersion.Commits
 {
@@ -12,7 +13,7 @@ namespace Ubiety.ConventionalVersion.Commits
             new Regex("^(?<type>\\w*)(?:\\((?<scope>.*)\\))?: (?<subject>.*)$",
                 RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline);
 
-        private static readonly string[] NoteKeywords = {"BREAKING CHANGE"};
+        private static readonly string[] NoteKeywords = { "BREAKING CHANGE" };
 
         public static ConventionalCommit Parse(Commit commit)
         {
@@ -20,7 +21,7 @@ namespace Ubiety.ConventionalVersion.Commits
 
             var commitLines = commit
                 .Message
-                .Split(new[] {"\r\n", "\r", "\n"}, StringSplitOptions.None)
+                .Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)
                 .Select(line => line.Trim())
                 .Where(line => !string.IsNullOrEmpty(line))
                 .ToList();
@@ -34,8 +35,13 @@ namespace Ubiety.ConventionalVersion.Commits
             if (headerParts.Success)
             {
                 conventionalCommit.Scope = headerParts.Groups["scope"].Value;
-                conventionalCommit.Type = headerParts.Groups["type"].Value;
                 conventionalCommit.Subject = headerParts.Groups["subject"].Value;
+
+                conventionalCommit.Type = ConventionalRules
+                    .Rules
+                    .FirstOrDefault(rule => rule.Value.Type.Equals(
+                        headerParts.Groups["type"].Value,
+                        StringComparison.InvariantCulture)).Key;
             }
             else
             {
