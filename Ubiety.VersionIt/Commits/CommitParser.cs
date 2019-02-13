@@ -10,7 +10,8 @@ namespace Ubiety.ConventionalVersion.Commits
     public static class CommitParser
     {
         private static readonly Regex HeaderPattern =
-            new Regex("^(?<type>\\w*)(?:\\((?<scope>.*)\\))?: (?<subject>.*)$",
+            new Regex(
+                "^(?<type>\\w*)(?:\\((?<scope>.*)\\))?: (?<subject>.*)$",
                 RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline);
 
         private static readonly string[] NoteKeywords = { "BREAKING CHANGE" };
@@ -28,7 +29,10 @@ namespace Ubiety.ConventionalVersion.Commits
 
             var header = commitLines.FirstOrDefault();
 
-            if (string.IsNullOrEmpty(header)) return conventionalCommit;
+            if (string.IsNullOrEmpty(header))
+            {
+                return conventionalCommit;
+            }
 
             var headerParts = HeaderPattern.Match(header);
 
@@ -49,13 +53,19 @@ namespace Ubiety.ConventionalVersion.Commits
             }
 
             for (var i = 1; i < commitLines.Count(); i++)
+            {
                 foreach (var keyword in NoteKeywords)
+                {
                     if (commitLines[i].StartsWith(keyword, StringComparison.InvariantCulture))
+                    {
                         conventionalCommit.Notes.Add(new CommitNote
                         {
                             Title = keyword,
                             Text = commitLines[i].Substring($"{keyword}:".Length).TrimStart()
                         });
+                    }
+                }
+            }
 
             return conventionalCommit;
         }

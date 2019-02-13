@@ -13,7 +13,10 @@ namespace Ubiety.ConventionalVersion.Extensions
 
         public static IEnumerable<Commit> GetCommitsSinceLastVersion(this Repository repository, Tag tag)
         {
-            if (tag is null) return repository.Commits.ToList();
+            if (tag is null)
+            {
+                return repository.Commits.ToList();
+            }
 
             var filter = new CommitFilter
             {

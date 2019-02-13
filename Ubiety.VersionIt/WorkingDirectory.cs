@@ -21,7 +21,7 @@ namespace Ubiety.ConventionalVersion
 
         public static WorkingDirectory DiscoverRepository(string projectPath)
         {
-            var directory = "";
+            var directory = string.Empty;
 
             if (string.IsNullOrEmpty(projectPath))
             {
@@ -32,7 +32,9 @@ namespace Ubiety.ConventionalVersion
                 if (Path.HasExtension(projectPath))
                 {
                     if (".csproj".Equals(Path.GetExtension(projectPath), StringComparison.InvariantCultureIgnoreCase))
+                    {
                         directory = Path.GetDirectoryName(projectPath);
+                    }
                 }
                 else
                 {
@@ -42,12 +44,18 @@ namespace Ubiety.ConventionalVersion
 
             var candidate = new DirectoryInfo(directory);
 
-            if (!candidate.Exists) Exit("Working directory does not exist", 2);
+            if (!candidate.Exists)
+            {
+                Exit("Working directory does not exist", 2);
+            }
 
             do
             {
                 var isWorkingDirectory = candidate.GetDirectories(".git").Any();
-                if (isWorkingDirectory) return new WorkingDirectory(candidate.FullName);
+                if (isWorkingDirectory)
+                {
+                    return new WorkingDirectory(candidate.FullName);
+                }
 
                 candidate = candidate.Parent;
             } while (candidate != null);
@@ -59,26 +67,40 @@ namespace Ubiety.ConventionalVersion
 
         public WorkingDirectory UpdateVersion(bool skipDirtyCheck, string releaseAs, bool dryRun)
         {
-            if (dryRun) Information("DRY RUN - No changes will be committed");
+            if (dryRun)
+            {
+                Information("DRY RUN - No changes will be committed");
+            }
 
             Information($"Working directory is {_workingDirectoryName}");
 
             if (_repository.RetrieveStatus().IsDirty && !skipDirtyCheck)
+            {
                 Exit("Repository is dirty. Please commit your changes and try again", 1);
+            }
 
             _projects = Project.DiscoverProjects(_workingDirectoryName);
 
             if (!_projects.Any())
+            {
                 Exit($"Could not find any projects in {_workingDirectoryName} that have <Version> set.", 1);
+            }
 
             Information($"Discovered {_projects.Count()} versionable project(s)");
-            foreach (var project in _projects) Information($"  * {project.File}");
+            foreach (var project in _projects)
+            {
+                Information($"  * {project.File}");
+            }
 
             var nextVersion = _projects.First().GetNextVersion(_repository);
 
-            if (!string.IsNullOrEmpty(releaseAs)) nextVersion = new ProjectVersion(releaseAs);
+            if (!string.IsNullOrEmpty(releaseAs))
+            {
+                nextVersion = new ProjectVersion(releaseAs);
+            }
 
             foreach (var project in _projects)
+            {
                 if (nextVersion != project.Version)
                 {
                     Step($"Bumping version from {project.Version} to {nextVersion} in project {project.File}");
@@ -93,6 +115,7 @@ namespace Ubiety.ConventionalVersion
                 {
                     Information($"No version change for project {project.File}");
                 }
+            }
 
             return this;
         }
@@ -103,9 +126,13 @@ namespace Ubiety.ConventionalVersion
             var changelogText = Changelog.UpdateChangelog(_projects.First(), _repository);
 
             if (dryRun)
+            {
                 Information(changelogText);
+            }
             else
+            {
                 changelog.WriteFile(changelogText);
+            }
 
             Commands.Stage(_repository, changelog.FilePath);
             Step("Updated CHANGELOG.md");
@@ -122,7 +149,10 @@ namespace Ubiety.ConventionalVersion
                 return;
             }
 
-            foreach (var project in _projects) Commands.Stage(_repository, project.File);
+            foreach (var project in _projects)
+            {
+                Commands.Stage(_repository, project.File);
+            }
 
             var firstProject = _projects.First();
 
@@ -131,11 +161,14 @@ namespace Ubiety.ConventionalVersion
 
             var versionCommit = _repository.Commit(commitMessage, author, author);
             Step("Committed changes to projects and CHANGELOG.md");
-            _ = _repository.Tags.Add(firstProject.Version.Tag, versionCommit, author,
+            _ = _repository.Tags.Add(
+                firstProject.Version.Tag,
+                versionCommit,
+                author,
                 $"{firstProject.Version.Version}");
             Step($"Tagged new version as {firstProject.Version.Tag}");
 
-            Information("");
+            Information(string.Empty);
             Information("Run `git push --follow-tags origin master` to push changes and tags to origin");
         }
     }
