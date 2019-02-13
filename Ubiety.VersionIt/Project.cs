@@ -30,11 +30,6 @@ namespace Ubiety.ConventionalVersion
         public IEnumerable<ConventionalCommit> BreakingCommits => Commits.Where(commit =>
             commit.Notes.Any(note => note.Title.Equals("BREAKING CHANGE", StringComparison.InvariantCulture)));
 
-        public IEnumerable<ConventionalCommit> GetCommits(ConventionalTypes type)
-        {
-            return Commits.Where(commit => commit.Type == type);
-        }
-
         public static IEnumerable<Project> DiscoverProjects(string directory)
         {
             return Directory
@@ -60,6 +55,11 @@ namespace Ubiety.ConventionalVersion
         public static Project Create(string projectFile)
         {
             return new Project(projectFile, GetVersion(projectFile));
+        }
+
+        public IEnumerable<ConventionalCommit> GetCommits(ConventionalTypes type)
+        {
+            return Commits.Where(commit => commit.Type == type);
         }
 
         public ProjectVersion GetNextVersion(Repository repository)

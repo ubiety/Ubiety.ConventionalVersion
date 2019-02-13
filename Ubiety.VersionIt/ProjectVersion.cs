@@ -33,6 +33,31 @@ namespace Ubiety.ConventionalVersion
 
         public string PreviousTag { get; }
 
+        public static implicit operator string(ProjectVersion version)
+        {
+            return version.ToString();
+        }
+
+        public static bool operator ==(ProjectVersion left, ProjectVersion right)
+        {
+            if (left is null)
+            {
+                return right is null;
+            }
+
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ProjectVersion left, ProjectVersion right)
+        {
+            if (left is null)
+            {
+                return right is null;
+            }
+
+            return !left.Equals(right);
+        }
+
         public ProjectVersion IncrementBuild(bool isMaster)
         {
             return new ProjectVersion(new Version(Version.Major, Version.Minor, Version.Build + 1), !isMaster, Tag);
@@ -53,36 +78,16 @@ namespace Ubiety.ConventionalVersion
             return !_isPreview ? new ProjectVersion(Version, _isPreview) : new ProjectVersion(Version, !isMaster);
         }
 
-        public static implicit operator string(ProjectVersion version)
-        {
-            return version.ToString();
-        }
-
-        public static bool operator ==(ProjectVersion left, ProjectVersion right)
-        {
-            if (left is null) return right is null;
-
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(ProjectVersion left, ProjectVersion right)
-        {
-            if (left is null)
-            {
-                return right is null;
-            }
-
-            return !left.Equals(right);
-        }
-
         public override string ToString()
         {
-            return $"{Version}{(_isPreview ? "-preview" : "")}";
+            return $"{Version}{(_isPreview ? "-preview" : string.Empty)}";
         }
 
         public override bool Equals(object obj)
         {
-            return !(obj is null) && Version.Equals(((ProjectVersion) obj).Version);
+#pragma warning disable SA1119 // Statement must not use unnecessary parenthesis
+            return !(obj is null) && Version.Equals(((ProjectVersion)obj).Version);
+#pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
         }
 
         public override int GetHashCode()

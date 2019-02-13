@@ -25,6 +25,32 @@ namespace Ubiety.ConventionalVersion
             _isMaster = isMaster;
         }
 
+        public static VersionIncrementStrategy Create(IEnumerable<ConventionalCommit> commits, bool isMaster)
+        {
+            var impact = VersionImpact.None;
+
+            foreach (var commit in commits)
+            {
+                switch (commit.Type)
+                {
+                    case ConventionalTypes.Feat:
+                        impact = MaxImpact(impact, VersionImpact.Minor);
+                        break;
+                    case ConventionalTypes.Fix:
+                        impact = MaxImpact(impact, VersionImpact.Patch);
+                        break;
+                }
+
+                if (commit.Notes.Any(note =>
+                    note.Title.Equals("BREAKING CHANGE", StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    impact = MaxImpact(impact, VersionImpact.Major);
+                }
+            }
+
+            return new VersionIncrementStrategy(impact, isMaster);
+        }
+
         public ProjectVersion NextVersion(ProjectVersion version)
         {
             switch (_impact)
@@ -40,30 +66,6 @@ namespace Ubiety.ConventionalVersion
                 default:
                     return default;
             }
-        }
-
-        public static VersionIncrementStrategy Create(IEnumerable<ConventionalCommit> commits, bool isMaster)
-        {
-            var impact = VersionImpact.None;
-
-            foreach (var commit in commits)
-            {
-                switch (commit.Type)
-                {
-                    case ConventionalTypes.feat:
-                        impact = MaxImpact(impact, VersionImpact.Minor);
-                        break;
-                    case ConventionalTypes.fix:
-                        impact = MaxImpact(impact, VersionImpact.Patch);
-                        break;
-                }
-
-                if (commit.Notes.Any(note =>
-                    note.Title.Equals("BREAKING CHANGE", StringComparison.InvariantCultureIgnoreCase)))
-                    impact = MaxImpact(impact, VersionImpact.Major);
-            }
-
-            return new VersionIncrementStrategy(impact, isMaster);
         }
 
         private static VersionImpact MaxImpact(VersionImpact left, VersionImpact right)
