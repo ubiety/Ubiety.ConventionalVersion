@@ -45,7 +45,10 @@ namespace Ubiety.ConventionalVersion
             foreach (var rule in ConventionalRules.Rules)
             {
                 var commits = project.GetCommits(rule.Key);
-                AddCommits(rule.Value.Header, commits, changelog);
+                if (commits.IsAny())
+                {
+                    AddCommits(rule.Value.Header, commits, changelog);
+                }
             }
             
             if (project.BreakingCommits.IsAny())
