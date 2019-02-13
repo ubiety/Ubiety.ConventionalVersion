@@ -13,7 +13,7 @@ namespace Ubiety.ConventionalVersion
 {
     public class Project
     {
-        private const string VersionXPath = "./Project/PropertyGroup/Version";
+        private const string VersionXPath = ".//PropertyGroup/Version";
 
         private Project(string file, ProjectVersion version)
         {
@@ -57,6 +57,11 @@ namespace Ubiety.ConventionalVersion
             return versionElement is null ? default : new ProjectVersion(versionElement.Value);
         }
 
+        public static Project Create(string projectFile)
+        {
+            return new Project(projectFile, GetVersion(projectFile));
+        }
+
         public ProjectVersion GetNextVersion(Repository repository)
         {
             var versionTag = repository.GetVersionTag(Version);
@@ -76,11 +81,6 @@ namespace Ubiety.ConventionalVersion
             var versionElement = document.XPathSelectElement(VersionXPath);
             versionElement.Value = nextVersion;
             document.Save(File);
-        }
-
-        public static Project Create(string projectFile)
-        {
-            return new Project(projectFile, GetVersion(projectFile));
         }
     }
 }

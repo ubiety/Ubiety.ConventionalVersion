@@ -67,6 +67,11 @@ namespace Ubiety.ConventionalVersion
 
         public static bool operator !=(ProjectVersion left, ProjectVersion right)
         {
+            if (left is null)
+            {
+                return right is null;
+            }
+
             return !left.Equals(right);
         }
 
