@@ -4,7 +4,40 @@ All notable changes to this project will be documented in this file. See [Conven
 ---
 
 
-<a name="1.0.0"></a>
+<a name="1.1.0"></a>
+## [1.1.0](https://github.com/ubiety/Ubiety.ConventionalVersion/compare/v1.0.0...v1.1.0/) (2019-02-13)
+
+### Features
+
+  * add new rules functionality
+
+### Bug Fixes
+
+  * Merge pull request #5 from ubiety/develop
+  * projects with no version being added to the list of versionable projects
+  * Merge pull request #4 from ubiety/develop
+  * Merge pull request #3 from ubiety/master
+  * Merge pull request #2 from ubiety/master
+  * check if commits exist before outputting them to the changelog
+
+### Chores
+
+  * rename project folder
+  * add nuget metadata to project
+  * rename solution and project
+
+### Documentation
+
+  * add initial README information
+  * add LICENSE and README
+
+### Refactors
+
+  * add stylecop and refactor according to rules
+  * move static method upand readd project to solution
+  * update code with rider
+
+
 ## [1.0.0](https://github.com/ubiety/Ubiety.ConventionalVersion/compare/v0.4.0-preview...v1.0.0/) (2019-02-10)
 
 ### Breaking Changes
