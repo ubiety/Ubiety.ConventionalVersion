@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiety.Markdown", "Ubiety.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiety.VersionIt", "Ubiety.VersionIt\Ubiety.VersionIt.csproj", "{D2127D5F-A22A-4631-8181-6429E7B540F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiety.VersionIt.MSBuild", "Ubiety.VersionIt.MSBuild\Ubiety.VersionIt.MSBuild.csproj", "{8D70DB4C-951E-4683-9EC5-0214DCA203B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D2127D5F-A22A-4631-8181-6429E7B540F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2127D5F-A22A-4631-8181-6429E7B540F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2127D5F-A22A-4631-8181-6429E7B540F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D70DB4C-951E-4683-9EC5-0214DCA203B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D70DB4C-951E-4683-9EC5-0214DCA203B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D70DB4C-951E-4683-9EC5-0214DCA203B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D70DB4C-951E-4683-9EC5-0214DCA203B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
