@@ -5,7 +5,7 @@ VersionIt takes the pain out of maintaining your version and changelog. Just com
 ## Installation
 
 ```bash
-dotnet tool install --global Ubiety.ConventionalVersion
+dotnet tool install --global Ubiety.VersionIt
 ```
 
 ## Usage
