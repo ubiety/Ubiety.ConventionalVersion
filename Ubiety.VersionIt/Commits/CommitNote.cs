@@ -15,10 +15,19 @@
 
 namespace Ubiety.ConventionalVersion.Commits
 {
+    /// <summary>
+    ///     Git commit note.
+    /// </summary>
     public class CommitNote
     {
+        /// <summary>
+        ///     Gets or sets the note title.
+        /// </summary>
         public string Title { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the note text.
+        /// </summary>
         public string Text { get; set; }
     }
 }

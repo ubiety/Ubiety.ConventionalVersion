@@ -21,14 +21,35 @@ using Ubiety.VersionIt.Commits.Rules;
 
 namespace Ubiety.ConventionalVersion
 {
+    /// <summary>
+    ///     Version impact.
+    /// </summary>
     public enum VersionImpact
     {
+        /// <summary>
+        ///     No version impact.
+        /// </summary>
         None,
+
+        /// <summary>
+        ///     Patch level version impact.
+        /// </summary>
         Patch,
+
+        /// <summary>
+        ///     Minor level version impact.
+        /// </summary>
         Minor,
-        Major
+
+        /// <summary>
+        ///     Major level version impact.
+        /// </summary>
+        Major,
     }
 
+    /// <summary>
+    ///     Version incrementing strategy
+    /// </summary>
     public class VersionIncrementStrategy
     {
         private readonly VersionImpact _impact;
@@ -40,6 +61,12 @@ namespace Ubiety.ConventionalVersion
             _isMaster = isMaster;
         }
 
+        /// <summary>
+        ///     Create a new <see cref="VersionIncrementStrategy"/> instance.
+        /// </summary>
+        /// <param name="commits">List of commits.</param>
+        /// <param name="isMaster">A value indicating whether the current branch is the master.</param>
+        /// <returns>A <see cref="VersionIncrementStrategy"/> instance.</returns>
         public static VersionIncrementStrategy Create(IEnumerable<ConventionalCommit> commits, bool isMaster)
         {
             var impact = VersionImpact.None;
@@ -66,6 +93,11 @@ namespace Ubiety.ConventionalVersion
             return new VersionIncrementStrategy(impact, isMaster);
         }
 
+        /// <summary>
+        ///     Gets the next <see cref="ProjectVersion"/>.
+        /// </summary>
+        /// <param name="version">Previous <see cref="ProjectVersion"/>.</param>
+        /// <returns>New <see cref="ProjectVersion"/>.</returns>
         public ProjectVersion NextVersion(ProjectVersion version)
         {
             switch (_impact)

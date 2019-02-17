@@ -18,14 +18,29 @@ using Ubiety.VersionIt.Commits.Rules;
 
 namespace Ubiety.ConventionalVersion.Commits
 {
+    /// <summary>
+    ///     Conventional commit.
+    /// </summary>
     public class ConventionalCommit
     {
+        /// <summary>
+        ///     Gets or sets the commit scope.
+        /// </summary>
         public string Scope { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the commit type.
+        /// </summary>
         public ConventionalTypes Type { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the commit subject.
+        /// </summary>
         public string Subject { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the commit notes.
+        /// </summary>
         public List<CommitNote> Notes { get; set; } = new List<CommitNote>();
     }
 }

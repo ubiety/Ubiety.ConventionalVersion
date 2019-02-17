@@ -17,12 +17,19 @@ using System.Text.RegularExpressions;
 
 namespace Ubiety.ConventionalVersion
 {
+    /// <summary>
+    ///     Git project URL.
+    /// </summary>
     public class GitUrl
     {
         private readonly Regex _urlRegex = new Regex(
             "^(?<user>.*)\\@(?<server>.*)\\:(?<org>.*)\\/(?<repo>.*)\\.git$",
             RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline);
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="GitUrl"/> class.
+        /// </summary>
+        /// <param name="url">String of the git URL.</param>
         public GitUrl(string url)
         {
             var matches = _urlRegex.Match(url);
@@ -37,14 +44,29 @@ namespace Ubiety.ConventionalVersion
             Repository = matches.Groups["repo"].Value;
         }
 
+        /// <summary>
+        ///     Gets the URL host.
+        /// </summary>
         public string Host { get; }
 
+        /// <summary>
+        ///     Gets the repository organization.
+        /// </summary>
         public string Organization { get; }
 
+        /// <summary>
+        ///     Gets the repository name.
+        /// </summary>
         public string Repository { get; }
 
+        /// <summary>
+        ///     Gets the web URL.
+        /// </summary>
         public string WebUrl => $"https://{Host}/{Organization}/{Repository}";
 
+        /// <summary>
+        ///     Gets the project comparison URL.
+        /// </summary>
         public string CompareUrl => $"{WebUrl}/compare";
     }
 }

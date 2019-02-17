@@ -17,23 +17,75 @@ using System.Collections.Generic;
 
 namespace Ubiety.VersionIt.Commits.Rules
 {
+    /// <summary>
+    ///     Conventional commit types.
+    /// </summary>
     public enum ConventionalTypes
     {
+        /// <summary>
+        ///     A bug fix
+        /// </summary>
         Fix,
+
+        /// <summary>
+        ///     A new feature
+        /// </summary>
         Feat,
+
+        /// <summary>
+        ///     Documentation update
+        /// </summary>
         Docs,
+
+        /// <summary>
+        ///     Continuous Integration
+        /// </summary>
         Ci,
+
+        /// <summary>
+        ///     Build system changes
+        /// </summary>
         Build,
+
+        /// <summary>
+        ///     General changes
+        /// </summary>
         Chore,
+
+        /// <summary>
+        ///     Performance enhancements
+        /// </summary>
         Perf,
+
+        /// <summary>
+        ///     Code change that is not a bug fix or new feature
+        /// </summary>
         Refactor,
+
+        /// <summary>
+        ///     Code reversion
+        /// </summary>
         Revert,
+
+        /// <summary>
+        ///     Changes that do not affect the meaning of the code
+        /// </summary>
         Style,
-        Test
+
+        /// <summary>
+        ///     Changes to the test framework
+        /// </summary>
+        Test,
     }
 
+    /// <summary>
+    ///     Conventional commit rules.
+    /// </summary>
     public static class ConventionalRules
     {
+        /// <summary>
+        ///     Gets a value for the rules.
+        /// </summary>
         public static Dictionary<ConventionalTypes, (string Type, string Header)> Rules => new Dictionary<ConventionalTypes, (string, string)>
         {
             { ConventionalTypes.Feat, ("feat", "Features") },

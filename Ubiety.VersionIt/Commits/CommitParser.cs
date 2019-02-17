@@ -22,6 +22,9 @@ using Ubiety.VersionIt.Commits.Rules;
 
 namespace Ubiety.ConventionalVersion.Commits
 {
+    /// <summary>
+    ///     Git commit parser.
+    /// </summary>
     public static class CommitParser
     {
         private static readonly Regex HeaderPattern =
@@ -31,6 +34,11 @@ namespace Ubiety.ConventionalVersion.Commits
 
         private static readonly string[] NoteKeywords = { "BREAKING CHANGE" };
 
+        /// <summary>
+        ///     Parse the commit.
+        /// </summary>
+        /// <param name="commit">Git commit to parse.</param>
+        /// <returns>A new <see cref="ConventionalCommit"/> representing the git commit.</returns>
         public static ConventionalCommit Parse(Commit commit)
         {
             var conventionalCommit = new ConventionalCommit();
@@ -76,7 +84,7 @@ namespace Ubiety.ConventionalVersion.Commits
                         conventionalCommit.Notes.Add(new CommitNote
                         {
                             Title = keyword,
-                            Text = commitLines[i].Substring($"{keyword}:".Length).TrimStart()
+                            Text = commitLines[i].Substring($"{keyword}:".Length).TrimStart(),
                         });
                     }
                 }
@@ -85,6 +93,11 @@ namespace Ubiety.ConventionalVersion.Commits
             return conventionalCommit;
         }
 
+        /// <summary>
+        ///     Parse a number of git commits.
+        /// </summary>
+        /// <param name="commits">List of commits to parse.</param>
+        /// <returns>List of <see cref="ConventionalCommit"/>.</returns>
         public static IEnumerable<ConventionalCommit> Parse(IEnumerable<Commit> commits)
         {
             return commits.Select(Parse).ToList();

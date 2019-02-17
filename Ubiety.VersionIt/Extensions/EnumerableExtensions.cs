@@ -18,8 +18,17 @@ using System.Linq;
 
 namespace Ubiety.ConventionalVersion.Extensions
 {
+    /// <summary>
+    ///     Enumerable extension methods.
+    /// </summary>
     public static class EnumerableExtensions
     {
+        /// <summary>
+        ///     Does the enumerable contain any data?.
+        /// </summary>
+        /// <typeparam name="T">Type of enumerable.</typeparam>
+        /// <param name="data">Enumerable to check.</param>
+        /// <returns>True if the enumerable contains anything.</returns>
         public static bool IsAny<T>(this IEnumerable<T> data)
         {
             return data != null && data.Any();

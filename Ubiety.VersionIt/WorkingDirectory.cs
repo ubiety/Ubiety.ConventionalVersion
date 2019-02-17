@@ -22,6 +22,9 @@ using static Ubiety.Console.Ui.CommandLine;
 
 namespace Ubiety.ConventionalVersion
 {
+    /// <summary>
+    ///     Working directory.
+    /// </summary>
     public class WorkingDirectory
     {
         private readonly Repository _repository;
@@ -34,6 +37,11 @@ namespace Ubiety.ConventionalVersion
             _repository = new Repository(_workingDirectoryName);
         }
 
+        /// <summary>
+        ///     Discover the repository path.
+        /// </summary>
+        /// <param name="projectPath">Path of the current project.</param>
+        /// <returns>A new <see cref="WorkingDirectory"/> instance.</returns>
         public static WorkingDirectory DiscoverRepository(string projectPath)
         {
             var directory = string.Empty;
@@ -80,6 +88,13 @@ namespace Ubiety.ConventionalVersion
             return default;
         }
 
+        /// <summary>
+        ///     Update the project version.
+        /// </summary>
+        /// <param name="skipDirtyCheck">A value indicating whether to skip the repository dirty check.</param>
+        /// <param name="releaseAs">Version to release the project as.</param>
+        /// <param name="dryRun">A value indicating whether this is a dry run.</param>
+        /// <returns>A <see cref="WorkingDirectory"/> instance.</returns>
         public WorkingDirectory UpdateVersion(bool skipDirtyCheck, string releaseAs, bool dryRun)
         {
             if (dryRun)
@@ -135,6 +150,11 @@ namespace Ubiety.ConventionalVersion
             return this;
         }
 
+        /// <summary>
+        ///     Update the changelog.
+        /// </summary>
+        /// <param name="dryRun">A value indicating whether this is a dry run.</param>
+        /// <returns>A <see cref="WorkingDirectory"/> instance.</returns>
         public WorkingDirectory UpdateChangelog(bool dryRun)
         {
             var changelog = Changelog.DiscoverChangelog(_workingDirectoryName);
@@ -155,6 +175,10 @@ namespace Ubiety.ConventionalVersion
             return this;
         }
 
+        /// <summary>
+        ///     Commit changes to the repository.
+        /// </summary>
+        /// <param name="skipCommit">A value indicating whether to skip the commit.</param>
         public void CommitChanges(bool skipCommit)
         {
             if (skipCommit)

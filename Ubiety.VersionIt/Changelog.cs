@@ -26,6 +26,9 @@ using Ubiety.VersionIt.Commits.Rules;
 
 namespace Ubiety.ConventionalVersion
 {
+    /// <summary>
+    ///     Project changelog.
+    /// </summary>
     public class Changelog
     {
         private readonly FileInfo _changelogFile;
@@ -35,8 +38,17 @@ namespace Ubiety.ConventionalVersion
             _changelogFile = changelogFile;
         }
 
+        /// <summary>
+        ///     Gets the changelog file path.
+        /// </summary>
         public string FilePath => _changelogFile.FullName;
 
+        /// <summary>
+        ///     Update the changelog.
+        /// </summary>
+        /// <param name="project">Project to update changelog for.</param>
+        /// <param name="repository">Git repository of the project.</param>
+        /// <returns>A string version of the new changelog.</returns>
         public static string UpdateChangelog(Project project, Repository repository)
         {
             var currentDate = DateTimeOffset.Now;
@@ -75,6 +87,11 @@ namespace Ubiety.ConventionalVersion
             return changelog;
         }
 
+        /// <summary>
+        ///     Discover the changelog file.
+        /// </summary>
+        /// <param name="workingDirectory">Directory to search.</param>
+        /// <returns>A new <see cref="Changelog"/> instance.</returns>
         public static Changelog DiscoverChangelog(string workingDirectory)
         {
             var changelogFile = new FileInfo(Path.Combine(workingDirectory, "CHANGELOG.md"));
@@ -82,6 +99,10 @@ namespace Ubiety.ConventionalVersion
             return new Changelog(changelogFile);
         }
 
+        /// <summary>
+        ///     Write the changelog to a file.
+        /// </summary>
+        /// <param name="changelog">String of the changelog to write.</param>
         public void WriteFile(string changelog)
         {
             if (_changelogFile.Exists)

@@ -19,13 +19,28 @@ using LibGit2Sharp;
 
 namespace Ubiety.ConventionalVersion.Extensions
 {
+    /// <summary>
+    ///     Git repository extension methods.
+    /// </summary>
     public static class RepositoryExtensions
     {
+        /// <summary>
+        ///     Get the version tag.
+        /// </summary>
+        /// <param name="repository">Repository to search.</param>
+        /// <param name="version">Project version to look for.</param>
+        /// <returns>Git tag for the version.</returns>
         public static Tag GetVersionTag(this Repository repository, ProjectVersion version)
         {
             return repository.Tags.SingleOrDefault(tag => tag.IsAnnotated && tag.Annotation.Name == version.Tag);
         }
 
+        /// <summary>
+        ///     Gets the commits since the last version tag.
+        /// </summary>
+        /// <param name="repository">Repository to search.</param>
+        /// <param name="tag">Tag to search from.</param>
+        /// <returns>List of commits.</returns>
         public static IEnumerable<Commit> GetCommitsSinceLastVersion(this Repository repository, Tag tag)
         {
             if (tag is null)
@@ -35,7 +50,7 @@ namespace Ubiety.ConventionalVersion.Extensions
 
             var filter = new CommitFilter
             {
-                ExcludeReachableFrom = tag
+                ExcludeReachableFrom = tag,
             };
 
             return repository.Commits.QueryBy(filter).ToList();
