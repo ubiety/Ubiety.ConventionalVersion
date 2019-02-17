@@ -173,7 +173,7 @@ namespace Ubiety.ConventionalVersion
         /// <summary>
         ///     Gets the hash code for the current instance.
         /// </summary>
-        /// <returns>Object hash code</returns>
+        /// <returns>Object hash code.</returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();

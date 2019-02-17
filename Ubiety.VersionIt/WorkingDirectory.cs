@@ -81,7 +81,8 @@ namespace Ubiety.ConventionalVersion
                 }
 
                 candidate = candidate.Parent;
-            } while (candidate != null);
+            }
+            while (candidate != null);
 
             Exit($"Directory {projectPath} or parent is not a git repository", 3);
 

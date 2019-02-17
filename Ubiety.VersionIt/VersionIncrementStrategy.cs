@@ -48,7 +48,7 @@ namespace Ubiety.ConventionalVersion
     }
 
     /// <summary>
-    ///     Version incrementing strategy
+    ///     Version incrementing strategy.
     /// </summary>
     public class VersionIncrementStrategy
     {
