@@ -19,7 +19,7 @@
     <PackageTags>versioning;conventional;commits;git;changelog</PackageTags>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\coder\source\repos\Ubiety.VersionIt\Ubiety.VersionIt\Ubiety.VersionIt.xml</DocumentationFile>
+    <DocumentationFile>Ubiety.VersionIt.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="stylecop.json" />

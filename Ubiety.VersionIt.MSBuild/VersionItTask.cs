@@ -2,9 +2,11 @@
 
 namespace Ubiety.VersionIt.MSBuild
 {
-    public class VersionItTask : Task
+    public class VersionItTask : ToolTask
     {
-        public override bool Execute()
+        protected override string ToolName => throw new System.NotImplementedException();
+
+        protected override string GenerateFullPathToTool()
         {
             throw new System.NotImplementedException();
         }
