@@ -4,11 +4,11 @@ namespace Ubiety.VersionIt.MSBuild
 {
     public class VersionItTask : ToolTask
     {
-        protected override string ToolName => throw new System.NotImplementedException();
+        protected override string ToolName => "versionit";
 
         protected override string GenerateFullPathToTool()
         {
-            throw new System.NotImplementedException();
+            return $"dotnet ${ToolName}";
         }
     }
 }

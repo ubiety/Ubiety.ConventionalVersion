@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+    <PackageOutputPath>../nupkg</PackageOutputPath>
+    <LangVersion>latest</LangVersion>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>VersionIt</Title>
+    <Authors>coder2000</Authors>
+    <PackageDescription>VersionIt is for automatically generating versions and changelog based on conventional commits.</PackageDescription>
+    <license>Apache-2.0</license>
+    <PackageProjectUrl>https://github.com/ubiety/Ubiety.VersionIt</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ubiety/Ubiety.VersionIt</RepositoryUrl>
+    <PackageTags>versioning;conventional;commits;git;changelog</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
