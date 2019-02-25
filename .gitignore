@@ -273,6 +273,7 @@ ServiceFabricBackup/
 *.bim.layout
 *.bim_*.settings
 *.rptproj.rsuser
+*- Backup*.rdl
 
 # Microsoft Fakes
 FakesAssemblies/
@@ -357,3 +358,12 @@ ASALocalRun/
 healthchecksdb
 
 # End of https://www.gitignore.io/api/visualstudio,visualstudiocode
+
+# Created by https://www.gitignore.io/api/cake
+# Edit at https://www.gitignore.io/?templates=cake
+
+### Cake ###
+tools/*
+!tools/packages.config
+
+# End of https://www.gitignore.io/api/cake
