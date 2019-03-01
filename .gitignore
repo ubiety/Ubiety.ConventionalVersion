@@ -1,6 +1,24 @@
+# Created by https://www.gitignore.io/api/git,cake,wyam,visualstudio,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=git,cake,wyam,visualstudio,visualstudiocode
 
-# Created by https://www.gitignore.io/api/visualstudio,visualstudiocode
-# Edit at https://www.gitignore.io/?templates=visualstudio,visualstudiocode
+### Cake ###
+tools/*
+!tools/packages.config
+
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
 
 ### VisualStudioCode ###
 .vscode/*
@@ -12,6 +30,13 @@
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+
+### Wyam ###
+# Wyam Ignore - Based on https://wyam.io/docs/advanced/what_to_exclude_from_source_control
+docs/output/*
+config.wyam.dll
+config.wyam.hash
+*packages.xml
 
 ### VisualStudio ###
 ## Ignore Visual Studio temporary files, build results, and
@@ -273,6 +298,7 @@ ServiceFabricBackup/
 *.bim.layout
 *.bim_*.settings
 *.rptproj.rsuser
+*- Backup*.rdl
 
 # Microsoft Fakes
 FakesAssemblies/
@@ -356,4 +382,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-# End of https://www.gitignore.io/api/visualstudio,visualstudiocode
+# End of https://www.gitignore.io/api/git,cake,wyam,visualstudio,visualstudiocode

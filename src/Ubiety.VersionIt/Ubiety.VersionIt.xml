@@ -1,0 +1,574 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ubiety.VersionIt</name>
+    </assembly>
+    <members>
+        <member name="T:Ubiety.VersionIt.BuildServer.AppVeyor">
+            <summary>
+              AppVeyor build server.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.BuildServer.AppVeyor.Active">
+            <inheritdoc />
+        </member>
+        <member name="T:Ubiety.VersionIt.BuildServer.IBuildServer">
+            <summary>
+              Build server interface.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.BuildServer.IBuildServer.Active">
+            <summary>
+              Gets a value indicating whether the build server is active.
+            </summary>
+            <returns>A value indicating whether the build server is active.</returns>
+        </member>
+        <member name="T:Ubiety.VersionIt.Changelog">
+            <summary>
+                Project changelog.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Changelog.FilePath">
+            <summary>
+                Gets the changelog file path.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.Changelog.UpdateChangelog(Ubiety.VersionIt.Project,LibGit2Sharp.Repository)">
+            <summary>
+                Update the changelog.
+            </summary>
+            <param name="project">Project to update changelog for.</param>
+            <param name="repository">Git repository of the project.</param>
+            <returns>A string version of the new changelog.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.Changelog.DiscoverChangelog(System.String)">
+            <summary>
+                Discover the changelog file.
+            </summary>
+            <param name="workingDirectory">Directory to search.</param>
+            <returns>A new <see cref="T:Ubiety.VersionIt.Changelog"/> instance.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.Changelog.WriteFile(System.String)">
+            <summary>
+                Write the changelog to a file.
+            </summary>
+            <param name="changelog">String of the changelog to write.</param>
+        </member>
+        <member name="T:Ubiety.VersionIt.Commits.CommitNote">
+            <summary>
+                Git commit note.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Commits.CommitNote.Title">
+            <summary>
+                Gets or sets the note title.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Commits.CommitNote.Text">
+            <summary>
+                Gets or sets the note text.
+            </summary>
+        </member>
+        <member name="T:Ubiety.VersionIt.Commits.CommitParser">
+            <summary>
+                Git commit parser.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.Commits.CommitParser.Parse(LibGit2Sharp.Commit)">
+            <summary>
+                Parse the commit.
+            </summary>
+            <param name="commit">Git commit to parse.</param>
+            <returns>A new <see cref="T:Ubiety.VersionIt.Commits.ConventionalCommit"/> representing the git commit.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.Commits.CommitParser.Parse(System.Collections.Generic.IEnumerable{LibGit2Sharp.Commit})">
+            <summary>
+                Parse a number of git commits.
+            </summary>
+            <param name="commits">List of commits to parse.</param>
+            <returns>List of <see cref="T:Ubiety.VersionIt.Commits.ConventionalCommit"/>.</returns>
+        </member>
+        <member name="T:Ubiety.VersionIt.Commits.ConventionalCommit">
+            <summary>
+                Conventional commit.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Commits.ConventionalCommit.Scope">
+            <summary>
+                Gets or sets the commit scope.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Commits.ConventionalCommit.Type">
+            <summary>
+                Gets or sets the commit type.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Commits.ConventionalCommit.Subject">
+            <summary>
+                Gets or sets the commit subject.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Commits.ConventionalCommit.Notes">
+            <summary>
+                Gets or sets the commit notes.
+            </summary>
+        </member>
+        <member name="T:Ubiety.VersionIt.Commits.Rules.ConventionalTypes">
+            <summary>
+                Conventional commit types.
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.Commits.Rules.ConventionalTypes.Fix">
+            <summary>
+                A bug fix
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.Commits.Rules.ConventionalTypes.Feat">
+            <summary>
+                A new feature
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.Commits.Rules.ConventionalTypes.Docs">
+            <summary>
+                Documentation update
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.Commits.Rules.ConventionalTypes.Ci">
+            <summary>
+                Continuous Integration
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.Commits.Rules.ConventionalTypes.Build">
+            <summary>
+                Build system changes
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.Commits.Rules.ConventionalTypes.Chore">
+            <summary>
+                General changes
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.Commits.Rules.ConventionalTypes.Perf">
+            <summary>
+                Performance enhancements
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.Commits.Rules.ConventionalTypes.Refactor">
+            <summary>
+                Code change that is not a bug fix or new feature
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.Commits.Rules.ConventionalTypes.Revert">
+            <summary>
+                Code reversion
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.Commits.Rules.ConventionalTypes.Style">
+            <summary>
+                Changes that do not affect the meaning of the code
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.Commits.Rules.ConventionalTypes.Test">
+            <summary>
+                Changes to the test framework
+            </summary>
+        </member>
+        <member name="T:Ubiety.VersionIt.Commits.Rules.ConventionalRules">
+            <summary>
+                Conventional commit rules.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Commits.Rules.ConventionalRules.Rules">
+            <summary>
+                Gets a value for the rules.
+            </summary>
+        </member>
+        <member name="T:Ubiety.VersionIt.Configuration">
+            <summary>
+                Configuration options.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Configuration.GitUser">
+            <summary>
+                Gets or sets the git user name.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Configuration.GitEmail">
+            <summary>
+                Gets or sets the git email address.
+            </summary>
+        </member>
+        <member name="T:Ubiety.VersionIt.Extensions.EnumerableExtensions">
+            <summary>
+                Enumerable extension methods.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.Extensions.EnumerableExtensions.IsAny``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+                Does the enumerable contain any data?.
+            </summary>
+            <typeparam name="T">Type of enumerable.</typeparam>
+            <param name="data">Enumerable to check.</param>
+            <returns>True if the enumerable contains anything.</returns>
+        </member>
+        <member name="T:Ubiety.VersionIt.Extensions.RepositoryExtensions">
+            <summary>
+                Git repository extension methods.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.Extensions.RepositoryExtensions.GetVersionTag(LibGit2Sharp.Repository,Ubiety.VersionIt.ProjectVersion)">
+            <summary>
+                Get the version tag.
+            </summary>
+            <param name="repository">Repository to search.</param>
+            <param name="version">Project version to look for.</param>
+            <returns>Git tag for the version.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.Extensions.RepositoryExtensions.GetCommitsSinceLastVersion(LibGit2Sharp.Repository,LibGit2Sharp.Tag)">
+            <summary>
+                Gets the commits since the last version tag.
+            </summary>
+            <param name="repository">Repository to search.</param>
+            <param name="tag">Tag to search from.</param>
+            <returns>List of commits.</returns>
+        </member>
+        <member name="T:Ubiety.VersionIt.GitUrl">
+            <summary>
+                Git project URL.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.GitUrl.#ctor(System.String)">
+            <summary>
+                Initializes a new instance of the <see cref="T:Ubiety.VersionIt.GitUrl"/> class.
+            </summary>
+            <param name="url">String of the git URL.</param>
+        </member>
+        <member name="P:Ubiety.VersionIt.GitUrl.Host">
+            <summary>
+                Gets the URL host.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.GitUrl.Organization">
+            <summary>
+                Gets the repository organization.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.GitUrl.Repository">
+            <summary>
+                Gets the repository name.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.GitUrl.WebUrl">
+            <summary>
+                Gets the web URL.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.GitUrl.CompareUrl">
+            <summary>
+                Gets the project comparison URL.
+            </summary>
+        </member>
+        <member name="T:Ubiety.VersionIt.Program">
+            <summary>
+                Main program class.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Program.DryRun">
+            <summary>
+                Gets or sets a value indicating whether this is a dry run.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Program.SkipDirty">
+            <summary>
+                Gets or sets a value indicating whether the dirty check should be skipped.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Program.ReleaseAs">
+            <summary>
+                Gets or sets the version to release the project as.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Program.Silent">
+            <summary>
+                Gets or sets a value indicating whether to run silently.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Program.SkipCommit">
+            <summary>
+                Gets or sets a value indicating whether to skip commiting the changes.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Program.Config">
+            <summary>
+                Gets or sets the configuration file path.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Program.ProjectPath">
+            <summary>
+                Gets or sets a value for the project path.
+            </summary>
+        </member>
+        <member name="T:Ubiety.VersionIt.Project">
+            <summary>
+                Project information.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Project.File">
+            <summary>
+                Gets the project file.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Project.Version">
+            <summary>
+                Gets or sets the project version.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Project.Commits">
+            <summary>
+                Gets the project commits.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.Project.BreakingCommits">
+            <summary>
+                Gets the breaking change commits.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.Project.DiscoverProjects(System.String)">
+            <summary>
+                Discover projects.
+            </summary>
+            <param name="directory">Directory to search.</param>
+            <returns>List of projects found.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.Project.IsVersionable(System.String)">
+            <summary>
+                Is the project versionable?.
+            </summary>
+            <param name="projectFile">Project file to check.</param>
+            <returns>A value indicating whether the project can be versioned.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.Project.GetVersion(System.String)">
+            <summary>
+                Gets the project version.
+            </summary>
+            <param name="projectFile">Project file to get the version for.</param>
+            <returns>A <see cref="T:Ubiety.VersionIt.ProjectVersion"/> for the project.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.Project.Create(System.String)">
+            <summary>
+                Create a new project instance.
+            </summary>
+            <param name="projectFile">Project to use for the project instance.</param>
+            <returns>A <see cref="T:Ubiety.VersionIt.Project"/>.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.Project.GetCommits(Ubiety.VersionIt.Commits.Rules.ConventionalTypes)">
+            <summary>
+                Get commits for a specific commit type.
+            </summary>
+            <param name="type">Type of commit to get.</param>
+            <returns>List of commits that match.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.Project.GetNextVersion(LibGit2Sharp.Repository)">
+            <summary>
+                Get the next applicable version of the project.
+            </summary>
+            <param name="repository">Repository of the project.</param>
+            <returns>A <see cref="T:Ubiety.VersionIt.ProjectVersion"/> representing the next version.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.Project.SetVersion(Ubiety.VersionIt.ProjectVersion)">
+            <summary>
+                Sets the version in the project file.
+            </summary>
+            <param name="nextVersion"><see cref="T:Ubiety.VersionIt.ProjectVersion"/> to set the project to.</param>
+        </member>
+        <member name="T:Ubiety.VersionIt.ProjectVersion">
+            <summary>
+                Project version.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.ProjectVersion.#ctor(System.Version,System.Boolean,System.String)">
+            <summary>
+                Initializes a new instance of the <see cref="T:Ubiety.VersionIt.ProjectVersion"/> class.
+            </summary>
+            <param name="version"><see cref="P:Ubiety.VersionIt.ProjectVersion.Version"/> to use.</param>
+            <param name="isPreview">A value indicating whether the project is a preview build.</param>
+            <param name="previousTag">Previous git tag.</param>
+        </member>
+        <member name="M:Ubiety.VersionIt.ProjectVersion.#ctor(System.String)">
+            <summary>
+                Initializes a new instance of the <see cref="T:Ubiety.VersionIt.ProjectVersion"/> class.
+            </summary>
+            <param name="version">String implementation of the version.</param>
+        </member>
+        <member name="P:Ubiety.VersionIt.ProjectVersion.Version">
+            <summary>
+                Gets the <see cref="P:Ubiety.VersionIt.ProjectVersion.Version"/>.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.ProjectVersion.Tag">
+            <summary>
+                Gets the git tag for the version.
+            </summary>
+        </member>
+        <member name="P:Ubiety.VersionIt.ProjectVersion.PreviousTag">
+            <summary>
+                Gets the previous git tag.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.ProjectVersion.op_Implicit(Ubiety.VersionIt.ProjectVersion)~System.String">
+            <summary>
+                Converts the <see cref="T:Ubiety.VersionIt.ProjectVersion"/> to a string.
+            </summary>
+            <param name="version"><see cref="T:Ubiety.VersionIt.ProjectVersion"/> to convert.</param>
+        </member>
+        <member name="M:Ubiety.VersionIt.ProjectVersion.op_Equality(Ubiety.VersionIt.ProjectVersion,Ubiety.VersionIt.ProjectVersion)">
+            <summary>
+                Are the two <see cref="T:Ubiety.VersionIt.ProjectVersion"/> classes equal.
+            </summary>
+            <param name="left">Left <see cref="T:Ubiety.VersionIt.ProjectVersion"/>.</param>
+            <param name="right">Right <see cref="T:Ubiety.VersionIt.ProjectVersion"/>.</param>
+            <returns>A value indicating whether the versions are equal.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.ProjectVersion.op_Inequality(Ubiety.VersionIt.ProjectVersion,Ubiety.VersionIt.ProjectVersion)">
+            <summary>
+                Are the two <see cref="T:Ubiety.VersionIt.ProjectVersion"/> classes not equal.
+            </summary>
+            <param name="left">Left <see cref="T:Ubiety.VersionIt.ProjectVersion"/>.</param>
+            <param name="right">Right <see cref="T:Ubiety.VersionIt.ProjectVersion"/>.</param>
+            <returns>A value indicating whether the versions are not equal.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.ProjectVersion.IncrementBuild(System.Boolean)">
+            <summary>
+                Increment the build number.
+            </summary>
+            <param name="isMaster">Is the current branch the master.</param>
+            <returns>A new <see cref="T:Ubiety.VersionIt.ProjectVersion"/> with the incremented version.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.ProjectVersion.IncrementMinor(System.Boolean)">
+            <summary>
+                Increment the minor number.
+            </summary>
+            <param name="isMaster">A value indicating whether the current branch is the master.</param>
+            <returns>A new <see cref="T:Ubiety.VersionIt.ProjectVersion"/> instance with the incremented version.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.ProjectVersion.IncrementMajor(System.Boolean)">
+            <summary>
+                Increment the major number.
+            </summary>
+            <param name="isMaster">A value indicating whether the current branch is the master.</param>
+            <returns>A new <see cref="T:Ubiety.VersionIt.ProjectVersion"/> instance with the incremented version.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.ProjectVersion.ChangeSuffix(System.Boolean)">
+            <summary>
+                Change the version suffix.
+            </summary>
+            <param name="isMaster">A value indicating whether the current branch is the master.</param>
+            <returns>A new <see cref="T:Ubiety.VersionIt.ProjectVersion"/> instance with the new suffix.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.ProjectVersion.ToString">
+            <summary>
+                Converts the current instance to a string.
+            </summary>
+            <returns>A string representation of the version.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.ProjectVersion.Equals(System.Object)">
+            <summary>
+                Checks whether the two objects are equal.
+            </summary>
+            <param name="obj"><see cref="T:System.Object"/> to compare the current instance to.</param>
+            <returns>A value indicating whether the two objects are equal.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.ProjectVersion.GetHashCode">
+            <summary>
+                Gets the hash code for the current instance.
+            </summary>
+            <returns>Object hash code.</returns>
+        </member>
+        <member name="T:Ubiety.VersionIt.VersionImpact">
+            <summary>
+                Version impact.
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.VersionImpact.None">
+            <summary>
+                No version impact.
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.VersionImpact.Patch">
+            <summary>
+                Patch level version impact.
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.VersionImpact.Minor">
+            <summary>
+                Minor level version impact.
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.VersionImpact.Major">
+            <summary>
+                Major level version impact.
+            </summary>
+        </member>
+        <member name="T:Ubiety.VersionIt.VersionIncrementStrategy">
+            <summary>
+                Version incrementing strategy.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.VersionIncrementStrategy.Create(System.Collections.Generic.IEnumerable{Ubiety.VersionIt.Commits.ConventionalCommit},System.Boolean)">
+            <summary>
+                Create a new <see cref="T:Ubiety.VersionIt.VersionIncrementStrategy"/> instance.
+            </summary>
+            <param name="commits">List of commits.</param>
+            <param name="isMaster">A value indicating whether the current branch is the master.</param>
+            <returns>A <see cref="T:Ubiety.VersionIt.VersionIncrementStrategy"/> instance.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.VersionIncrementStrategy.NextVersion(Ubiety.VersionIt.ProjectVersion)">
+            <summary>
+                Gets the next <see cref="T:Ubiety.VersionIt.ProjectVersion"/>.
+            </summary>
+            <param name="version">Previous <see cref="T:Ubiety.VersionIt.ProjectVersion"/>.</param>
+            <returns>New <see cref="T:Ubiety.VersionIt.ProjectVersion"/>.</returns>
+        </member>
+        <member name="T:Ubiety.VersionIt.WorkingDirectory">
+            <summary>
+                Working directory.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.WorkingDirectory.DiscoverRepository(System.String)">
+            <summary>
+                Discover the repository path.
+            </summary>
+            <param name="projectPath">Path of the current project.</param>
+            <returns>A new <see cref="T:Ubiety.VersionIt.WorkingDirectory"/> instance.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.WorkingDirectory.UpdateVersion(System.Boolean,System.String,System.Boolean)">
+            <summary>
+                Update the project version.
+            </summary>
+            <param name="skipDirtyCheck">A value indicating whether to skip the repository dirty check.</param>
+            <param name="releaseAs">Version to release the project as.</param>
+            <param name="dryRun">A value indicating whether this is a dry run.</param>
+            <returns>A <see cref="T:Ubiety.VersionIt.WorkingDirectory"/> instance.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.WorkingDirectory.UpdateChangelog(System.Boolean)">
+            <summary>
+                Update the changelog.
+            </summary>
+            <param name="dryRun">A value indicating whether this is a dry run.</param>
+            <returns>A <see cref="T:Ubiety.VersionIt.WorkingDirectory"/> instance.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.WorkingDirectory.LoadConfiguration(System.String)">
+            <summary>
+                Loads the configuration file.
+            </summary>
+            <param name="configFile">Configuration file to load.</param>
+            <returns>Current working directory instance.</returns>
+        </member>
+        <member name="M:Ubiety.VersionIt.WorkingDirectory.CommitChanges(System.Boolean)">
+            <summary>
+                Commit changes to the repository.
+            </summary>
+            <param name="skipCommit">A value indicating whether to skip the commit.</param>
+        </member>
+    </members>
+</doc>

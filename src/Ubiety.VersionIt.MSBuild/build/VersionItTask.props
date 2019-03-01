@@ -1,0 +1,10 @@
+<Project TreatAsLocalProperty="TaskFolder;TaskAssembly">
+  <PropertyGroup>
+    <TaskFolder Condition="'$(MSBuildRuntimeType)' == 'Core'">netstandard2.0</TaskFolder>
+    <TaskFolder Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</TaskFolder>
+
+    <TaskAssembly>$(MSBuildThisFileDirectory)..\tasks\$(TaskFolder)\Ubiety.VersionIt.MSBuild.dll</TaskAssembly>
+  </PropertyGroup>
+
+  <UsingTask TaskName="Ubiety.VersionIt.MSBuild.VersionItTask" AssemblyFile="$(TaskAssembly)" />
+</Project>
