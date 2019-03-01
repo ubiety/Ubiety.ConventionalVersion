@@ -1,4 +1,4 @@
-﻿/* Copyright 2019 Dieter Lunn
+/* Copyright 2019 Dieter Lunn
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using LibGit2Sharp;
-using Ubiety.VersionIt.Commits;
-using Ubiety.VersionIt.Extensions;
 using Ubiety.Markdown;
 using Ubiety.Markdown.Elements;
+using Ubiety.VersionIt.Commits;
 using Ubiety.VersionIt.Commits.Rules;
+using Ubiety.VersionIt.Extensions;
 
 namespace Ubiety.VersionIt
 {

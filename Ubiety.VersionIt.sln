@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiety.VersionIt", "src\Ubi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiety.VersionIt.MSBuild", "src\Ubiety.VersionIt.MSBuild\Ubiety.VersionIt.MSBuild.csproj", "{B2DC278B-A79D-440D-B77C-EB616B460B70}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiety.VersionIt.Test", "test\Ubiety.VersionIt.Test\Ubiety.VersionIt.Test.csproj", "{727120D6-7AFA-4D4B-A628-581BEA3B9193}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiety.VersionIt.Cake", "src\Ubiety.VersionIt.Cake\Ubiety.VersionIt.Cake.csproj", "{E5123AD0-EE76-4FE6-B611-BBBE26DE7F82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{B2DC278B-A79D-440D-B77C-EB616B460B70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2DC278B-A79D-440D-B77C-EB616B460B70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2DC278B-A79D-440D-B77C-EB616B460B70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{727120D6-7AFA-4D4B-A628-581BEA3B9193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{727120D6-7AFA-4D4B-A628-581BEA3B9193}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{727120D6-7AFA-4D4B-A628-581BEA3B9193}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{727120D6-7AFA-4D4B-A628-581BEA3B9193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5123AD0-EE76-4FE6-B611-BBBE26DE7F82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5123AD0-EE76-4FE6-B611-BBBE26DE7F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5123AD0-EE76-4FE6-B611-BBBE26DE7F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5123AD0-EE76-4FE6-B611-BBBE26DE7F82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
