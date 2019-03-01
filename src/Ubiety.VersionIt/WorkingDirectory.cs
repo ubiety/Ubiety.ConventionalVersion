@@ -1,4 +1,4 @@
-﻿/* Copyright 2019 Dieter Lunn
+/* Copyright 2019 Dieter Lunn
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using LibGit2Sharp;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 using static Ubiety.Console.Ui.CommandLine;
 
 namespace Ubiety.ConventionalVersion
@@ -30,6 +32,7 @@ namespace Ubiety.ConventionalVersion
         private readonly Repository _repository;
         private readonly string _workingDirectoryName;
         private IEnumerable<Project> _projects;
+        private Configuration _configuration;
 
         private WorkingDirectory(string directoryName)
         {
@@ -172,6 +175,36 @@ namespace Ubiety.ConventionalVersion
 
             Commands.Stage(_repository, changelog.FilePath);
             Step("Updated CHANGELOG.md");
+
+            return this;
+        }
+
+        /// <summary>
+        ///     Loads the configuration file.
+        /// </summary>
+        /// <param name="configFile">Configuration file to load.</param>
+        /// <returns>Current working directory instance.</returns>
+        public WorkingDirectory LoadConfiguration(string configFile)
+        {
+            var defaultFile = ".versionit.yml";
+            string path;
+
+            if (string.IsNullOrEmpty(configFile))
+            {
+                path = configFile;
+            }
+            else
+            {
+                path = Path.Combine(_workingDirectoryName, defaultFile);
+            }
+
+            if (File.Exists(path))
+            {
+                var reader = new StreamReader(new FileStream(path, FileMode.Open));
+                var deserializer = new DeserializerBuilder().WithNamingConvention(new CamelCaseNamingConvention()).Build();
+
+                _configuration = deserializer.Deserialize<Configuration>(reader);
+            }
 
             return this;
         }

@@ -1,4 +1,4 @@
-﻿/* Copyright 2019 Dieter Lunn
+/* Copyright 2019 Dieter Lunn
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -57,6 +57,12 @@ namespace Ubiety.ConventionalVersion
         public bool SkipCommit { get; set; }
 
         /// <summary>
+        ///     Gets or sets the configuration file path.
+        /// </summary>
+        [Option(Description = "Configuration file path")]
+        public string Config { get; set; }
+
+        /// <summary>
         ///     Gets or sets a value for the project path.
         /// </summary>
         [Argument(0, Description = "Git project directory or csproj file, will use current directory if not supplied")]
@@ -75,6 +81,7 @@ namespace Ubiety.ConventionalVersion
 
             WorkingDirectory
                 .DiscoverRepository(ProjectPath)
+                .LoadConfiguration(Config)
                 .UpdateVersion(SkipDirty, ReleaseAs, DryRun)
                 .UpdateChangelog(DryRun)
                 .CommitChanges(SkipCommit);
