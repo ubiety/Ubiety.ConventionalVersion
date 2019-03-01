@@ -13,6 +13,8 @@
  *   limitations under the License.
  */
 
+using YamlDotNet.Serialization;
+
 namespace Ubiety.VersionIt
 {
     /// <summary>
@@ -23,11 +25,13 @@ namespace Ubiety.VersionIt
         /// <summary>
         ///     Gets or sets the git user name.
         /// </summary>
+        [YamlMember(Alias = "git-user", ApplyNamingConventions = false)]
         public string GitUser { get; set; }
 
         /// <summary>
         ///     Gets or sets the git email address.
         /// </summary>
+        [YamlMember(Alias = "git-email", ApplyNamingConventions = false)]
         public string GitEmail { get; set; }
     }
 }

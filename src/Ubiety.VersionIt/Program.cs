@@ -16,7 +16,7 @@
 using McMaster.Extensions.CommandLineUtils;
 using Ubiety.Console.Ui;
 
-namespace Ubiety.ConventionalVersion
+namespace Ubiety.VersionIt
 {
     /// <summary>
     ///     Main program class.

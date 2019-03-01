@@ -16,10 +16,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Ubiety.ConventionalVersion.Commits;
+using Ubiety.VersionIt.Commits;
 using Ubiety.VersionIt.Commits.Rules;
 
-namespace Ubiety.ConventionalVersion
+namespace Ubiety.VersionIt
 {
     /// <summary>
     ///     Version impact.

@@ -20,7 +20,7 @@ using System.Text.RegularExpressions;
 using LibGit2Sharp;
 using Ubiety.VersionIt.Commits.Rules;
 
-namespace Ubiety.ConventionalVersion.Commits
+namespace Ubiety.VersionIt.Commits
 {
     /// <summary>
     ///     Git commit parser.

@@ -13,7 +13,7 @@
  *   limitations under the License.
  */
 
-namespace Ubiety.ConventionalVersion.Commits
+namespace Ubiety.VersionIt.Commits
 {
     /// <summary>
     ///     Git commit note.

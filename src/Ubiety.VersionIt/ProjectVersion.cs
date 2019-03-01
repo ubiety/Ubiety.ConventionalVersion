@@ -15,7 +15,7 @@
 
 using System;
 
-namespace Ubiety.ConventionalVersion
+namespace Ubiety.VersionIt
 {
     /// <summary>
     ///     Project version.

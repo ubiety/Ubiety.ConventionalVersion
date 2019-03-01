@@ -20,11 +20,11 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using LibGit2Sharp;
-using Ubiety.ConventionalVersion.Commits;
-using Ubiety.ConventionalVersion.Extensions;
+using Ubiety.VersionIt.Commits;
+using Ubiety.VersionIt.Extensions;
 using Ubiety.VersionIt.Commits.Rules;
 
-namespace Ubiety.ConventionalVersion
+namespace Ubiety.VersionIt
 {
     /// <summary>
     ///     Project information.

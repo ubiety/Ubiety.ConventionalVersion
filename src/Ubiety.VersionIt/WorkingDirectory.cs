@@ -22,7 +22,7 @@ using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using static Ubiety.Console.Ui.CommandLine;
 
-namespace Ubiety.ConventionalVersion
+namespace Ubiety.VersionIt
 {
     /// <summary>
     ///     Working directory.
@@ -32,7 +32,7 @@ namespace Ubiety.ConventionalVersion
         private readonly Repository _repository;
         private readonly string _workingDirectoryName;
         private IEnumerable<Project> _projects;
-        private Configuration _configuration;
+        private VersionIt.Configuration _configuration;
 
         private WorkingDirectory(string directoryName)
         {
@@ -191,19 +191,20 @@ namespace Ubiety.ConventionalVersion
 
             if (string.IsNullOrEmpty(configFile))
             {
-                path = configFile;
+                path = Path.Combine(_workingDirectoryName, defaultFile);
             }
             else
             {
-                path = Path.Combine(_workingDirectoryName, defaultFile);
+                path = configFile;
             }
 
             if (File.Exists(path))
             {
-                var reader = new StreamReader(new FileStream(path, FileMode.Open));
                 var deserializer = new DeserializerBuilder().WithNamingConvention(new CamelCaseNamingConvention()).Build();
-
-                _configuration = deserializer.Deserialize<Configuration>(reader);
+                using (var reader = new StreamReader(new FileStream(path, FileMode.Open)))
+                {
+                    _configuration = deserializer.Deserialize<VersionIt.Configuration>(reader);
+                }
             }
 
             return this;
@@ -228,6 +229,12 @@ namespace Ubiety.ConventionalVersion
             }
 
             var firstProject = _projects.First();
+
+            if (!(_configuration is null))
+            {
+                _repository.Config.Set("user.name", _configuration.GitUser);
+                _repository.Config.Set("user.email", _configuration.GitEmail);
+            }
 
             var author = _repository.Config.BuildSignature(DateTimeOffset.Now);
             var commitMessage = $"chore(release): {firstProject.Version}";

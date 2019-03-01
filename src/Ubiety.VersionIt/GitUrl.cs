@@ -15,7 +15,7 @@
 
 using System.Text.RegularExpressions;
 
-namespace Ubiety.ConventionalVersion
+namespace Ubiety.VersionIt
 {
     /// <summary>
     ///     Git project URL.

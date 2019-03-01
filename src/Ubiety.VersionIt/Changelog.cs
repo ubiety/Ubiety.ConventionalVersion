@@ -18,13 +18,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using LibGit2Sharp;
-using Ubiety.ConventionalVersion.Commits;
-using Ubiety.ConventionalVersion.Extensions;
+using Ubiety.VersionIt.Commits;
+using Ubiety.VersionIt.Extensions;
 using Ubiety.Markdown;
 using Ubiety.Markdown.Elements;
 using Ubiety.VersionIt.Commits.Rules;
 
-namespace Ubiety.ConventionalVersion
+namespace Ubiety.VersionIt
 {
     /// <summary>
     ///     Project changelog.

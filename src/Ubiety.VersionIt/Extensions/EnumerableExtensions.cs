@@ -16,7 +16,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Ubiety.ConventionalVersion.Extensions
+namespace Ubiety.VersionIt.Extensions
 {
     /// <summary>
     ///     Enumerable extension methods.

@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LibGit2Sharp;
 
-namespace Ubiety.ConventionalVersion.Extensions
+namespace Ubiety.VersionIt.Extensions
 {
     /// <summary>
     ///     Git repository extension methods.

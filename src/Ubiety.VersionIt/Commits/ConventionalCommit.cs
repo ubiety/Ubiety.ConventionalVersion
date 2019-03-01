@@ -16,7 +16,7 @@
 using System.Collections.Generic;
 using Ubiety.VersionIt.Commits.Rules;
 
-namespace Ubiety.ConventionalVersion.Commits
+namespace Ubiety.VersionIt.Commits
 {
     /// <summary>
     ///     Conventional commit.
