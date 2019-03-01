@@ -4,7 +4,49 @@ All notable changes to this project will be documented in this file. See [Conven
 ---
 
 
-<a name="1.1.0"></a>
+<a name="1.2.0-preview"></a>
+## [1.2.0-preview](https://github.com/ubiety/Ubiety.VersionIt/compare/v1.1.0...v1.2.0-preview/) (2019-03-01)
+
+### Features
+
+  * added config for git username and email
+  * add configuration file loader
+  * start adding build server integration
+  * add wyam docs site
+  * add cake core lib
+  * add new cake addin lib
+  * implement tooltask for versioning
+  * add msbuild task project
+  * add version msbuild task
+
+### Bug Fixes
+
+  * Merge pull request #7 from ubiety/master
+  * Merge branch 'master' of github.com:ubiety/Ubiety.VersionIt
+  * Merge pull request #6 from ubiety/master
+  * Update install command in README
+  * Update issue templates
+
+### Chores
+
+  * add new projects to solution
+  * update solution to new project paths
+  * reorganize files to use new boilerplate
+  * add msbuild project and add file headers
+  * add handlebars and update license
+
+### Documentation
+
+  * fix security disclosure in readme
+  * add tidelift to readme
+  * Added comments to public interface
+
+### Build
+
+  * add appveyor script
+  * add build script and new test project
+
+
 ## [1.1.0](https://github.com/ubiety/Ubiety.ConventionalVersion/compare/v1.0.0...v1.1.0/) (2019-02-13)
 
 ### Features
