@@ -14,7 +14,7 @@
  */
 
 using McMaster.Extensions.CommandLineUtils;
-using Ubiety.Console.Ui;
+using Ubiety.Console;
 
 namespace Ubiety.VersionIt
 {
