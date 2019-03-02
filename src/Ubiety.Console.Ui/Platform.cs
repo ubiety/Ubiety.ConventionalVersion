@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Drawing;
 using Colorful;
 
-namespace Ubiety.Console.Ui
+namespace Ubiety.Console
 {
     public class Platform : IPlatform
     {

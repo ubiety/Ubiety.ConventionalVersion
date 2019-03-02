@@ -1,7 +1,7 @@
-﻿using System.Drawing;
+using System.Drawing;
 using Colorful;
 
-namespace Ubiety.Console.Ui
+namespace Ubiety.Console
 {
     public static class CommandLine
     {

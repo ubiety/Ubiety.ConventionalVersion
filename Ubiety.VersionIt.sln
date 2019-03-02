@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28531.58
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiety.Console.Ui", "src\Ubiety.Console.Ui\Ubiety.Console.Ui.csproj", "{75FF5F0E-9366-4587-B196-C946E234CFB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiety.Console", "src\Ubiety.Console.Ui\Ubiety.Console.csproj", "{75FF5F0E-9366-4587-B196-C946E234CFB1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiety.Markdown", "src\Ubiety.Markdown\Ubiety.Markdown.csproj", "{CA3F2715-468A-4E90-B170-7539202C2BCF}"
 EndProject

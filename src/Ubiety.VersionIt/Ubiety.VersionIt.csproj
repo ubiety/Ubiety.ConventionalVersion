@@ -47,7 +47,7 @@
     <PackageReference Include="YamlDotNet" Version="5.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ubiety.Console.Ui\Ubiety.Console.Ui.csproj" />
+    <ProjectReference Include="..\Ubiety.Console.Ui\Ubiety.Console.csproj" />
     <ProjectReference Include="..\Ubiety.Markdown\Ubiety.Markdown.csproj" />
   </ItemGroup>
 </Project>

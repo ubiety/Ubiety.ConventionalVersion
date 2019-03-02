@@ -20,7 +20,7 @@ using System.Linq;
 using LibGit2Sharp;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-using static Ubiety.Console.Ui.CommandLine;
+using static Ubiety.Console.CommandLine;
 
 namespace Ubiety.VersionIt
 {
