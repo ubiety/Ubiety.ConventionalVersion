@@ -42,7 +42,7 @@ namespace Ubiety.VersionIt.Core.Helpers
         /// <returns>true if the objects are equal, otherwise false.</returns>
         public bool Equals(T left, T right)
         {
-            if (left is null || right is null)
+            if (left == null || right == null)
             {
                 return false;
             }
