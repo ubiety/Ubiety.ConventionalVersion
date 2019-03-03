@@ -128,6 +128,16 @@ namespace Ubiety.VersionIt.Core.Version
             return left.CompareTo(right) <= 0;
         }
 
+        /// <summary>
+        ///     Parses a string into a new <see cref="PreReleaseTag"/> instance.
+        /// </summary>
+        /// <param name="tag">String of the version tag.</param>
+        /// <returns>A new <see cref="PreReleaseTag"/> instance.</returns>
+        public static PreReleaseTag Parse(string tag)
+        {
+            return default;
+        }
+
         /// <inheritdoc />
         public int CompareTo(PreReleaseTag other)
         {
