@@ -4,25 +4,6 @@
         <name>Ubiety.VersionIt</name>
     </assembly>
     <members>
-        <member name="T:Ubiety.VersionIt.BuildServer.AppVeyor">
-            <summary>
-              AppVeyor build server.
-            </summary>
-        </member>
-        <member name="M:Ubiety.VersionIt.BuildServer.AppVeyor.Active">
-            <inheritdoc />
-        </member>
-        <member name="T:Ubiety.VersionIt.BuildServer.IBuildServer">
-            <summary>
-              Build server interface.
-            </summary>
-        </member>
-        <member name="M:Ubiety.VersionIt.BuildServer.IBuildServer.Active">
-            <summary>
-              Gets a value indicating whether the build server is active.
-            </summary>
-            <returns>A value indicating whether the build server is active.</returns>
-        </member>
         <member name="T:Ubiety.VersionIt.Changelog">
             <summary>
                 Project changelog.
