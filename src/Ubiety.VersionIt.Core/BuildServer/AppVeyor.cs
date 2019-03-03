@@ -15,19 +15,16 @@
 
 using System;
 
-namespace Ubiety.VersionIt.BuildServer
+namespace Ubiety.VersionIt.Core.BuildServer
 {
     /// <summary>
     ///   AppVeyor build server.
     /// </summary>
-    public class AppVeyor : IBuildServer
+    public class AppVeyor : BuildServerBase
     {
         private const string ServerEnvVariable = "APPVEYOR";
 
         /// <inheritdoc />
-        public bool Active()
-        {
-            return !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServerEnvVariable));
-        }
+        public override bool Active => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServerEnvVariable));
     }
 }

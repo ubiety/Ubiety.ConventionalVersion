@@ -29,7 +29,7 @@ namespace Ubiety.VersionIt
         /// <summary>
         ///     Gets or sets a value indicating whether this is a dry run.
         /// </summary>
-        [Option(Description = "Execute without actually committing")]
+        [Option(Description = "Preview changes without updating files")]
         public bool DryRun { get; set; }
 
         /// <summary>

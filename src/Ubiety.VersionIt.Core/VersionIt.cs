@@ -13,6 +13,9 @@
  *   limitations under the License.
  */
 
+using System.Threading.Tasks;
+using Ubiety.VersionIt.Core.BuildServer;
+
 namespace Ubiety.VersionIt.Core
 {
     /// <summary>
@@ -20,5 +23,15 @@ namespace Ubiety.VersionIt.Core
     /// </summary>
     public class VersionIt
     {
+        /// <summary>
+        ///     Run the version task.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public async Task<int> RunAsync()
+        {
+            var buildServer = BuildServerBase.GetBuildServer();
+
+            return 0;
+        }
     }
 }
