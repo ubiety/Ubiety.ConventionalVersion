@@ -14,6 +14,7 @@
  */
 
 using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Ubiety.VersionIt.Core.Helpers;
 
@@ -64,6 +65,11 @@ namespace Ubiety.VersionIt.Core.Version
         ///     Gets the prerelease data.
         /// </summary>
         public PreReleaseTag PreRelease { get; private set; }
+
+        public static implicit operator string(SemanticVersion semanticVersion)
+        {
+            return semanticVersion.ToString();
+        }
 
         public static bool operator ==(SemanticVersion left, SemanticVersion right)
         {
@@ -138,6 +144,16 @@ namespace Ubiety.VersionIt.Core.Version
             }
 
             return left.CompareTo(right) <= 0;
+        }
+
+        /// <summary>
+        ///     Determines whether the provided instance is empty.
+        /// </summary>
+        /// <param name="version">Version instance to compare.</param>
+        /// <returns>true if the version is empty; otherwise, false.</returns>
+        public static bool IsEmpty(SemanticVersion version)
+        {
+            return Empty.Equals(version);
         }
 
         /// <summary>
@@ -273,13 +289,37 @@ namespace Ubiety.VersionIt.Core.Version
         /// <inheritdoc />
         public override string ToString()
         {
-            return ToString(null);
+            return ToString("S");
         }
 
         /// <inheritdoc />
         public string ToString(string format, IFormatProvider formatProvider = null)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(format))
+            {
+                format = "J";
+            }
+
+            if (!(formatProvider is null))
+            {
+                var formatter = formatProvider.GetFormat(GetType()) as ICustomFormatter;
+                if (!(formatter is null))
+                {
+                    return formatter.Format(format, this, formatProvider);
+                }
+            }
+
+            switch (format.ToUpperInvariant())
+            {
+                case "J":
+                    return $"{Major}.{Minor}.{Patch}";
+                case "S":
+                    return PreRelease.HasTag() ? $"{ToString("J")}-{PreRelease}" : ToString("J");
+                case "T":
+                    return PreRelease.HasTag() ? $"{ToString("J")}-{PreRelease.ToString("T")}" : ToString("J");
+                default:
+                    throw new FormatException($"The '{format}' format string is not supported.");
+            }
         }
 
         /// <inheritdoc />

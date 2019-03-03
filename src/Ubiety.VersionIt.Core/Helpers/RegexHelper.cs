@@ -25,5 +25,11 @@ namespace Ubiety.VersionIt.Core.Helpers
         /// </summary>
         // language=regex
         public const string SemanticVersionRegex = @"^(?<SemVer>(?<Major>\d+)(\.(?<Minor>\d+))(\.(?<Patch>\d+))(\.(?<FourthPart>\d+))?(-(?<Tag>[^\+]*)))?$";
+
+        /// <summary>
+        ///     Pre-release tag regular expression.
+        /// </summary>
+        // language=regex
+        public const string PreReleaseTagRegex = @"(?<Name>.*?)\.?(?<Number>\d+)?$";
     }
 }

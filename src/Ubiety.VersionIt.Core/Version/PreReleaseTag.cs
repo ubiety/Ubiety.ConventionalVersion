@@ -14,6 +14,7 @@
  */
 
 using System;
+using System.Text.RegularExpressions;
 using Ubiety.VersionIt.Core.Helpers;
 
 namespace Ubiety.VersionIt.Core.Version
@@ -46,12 +47,22 @@ namespace Ubiety.VersionIt.Core.Version
         /// <summary>
         ///     Gets the pre-release name.
         /// </summary>
-        public string Name { get; }
+        public string Name { get; private set; }
 
         /// <summary>
         ///     Gets the pre-release build number.
         /// </summary>
-        public int? Number { get; }
+        public int? Number { get; private set; }
+
+        public static implicit operator string(PreReleaseTag tag)
+        {
+            return tag.ToString();
+        }
+
+        public static implicit operator PreReleaseTag(string tag)
+        {
+            return Parse(tag);
+        }
 
         public static bool operator ==(PreReleaseTag left, PreReleaseTag right)
         {
@@ -135,7 +146,42 @@ namespace Ubiety.VersionIt.Core.Version
         /// <returns>A new <see cref="PreReleaseTag"/> instance.</returns>
         public static PreReleaseTag Parse(string tag)
         {
-            return default;
+            if (string.IsNullOrEmpty(tag))
+            {
+                return new PreReleaseTag();
+            }
+
+            if (!TryParse(tag, out var preReleaseTag))
+            {
+                throw new Exception();
+            }
+
+            return preReleaseTag;
+        }
+
+        /// <summary>
+        ///     Parses a string into a new <see cref="PreReleaseTag"/> instance.
+        /// </summary>
+        /// <param name="tag">String of the version tag.</param>
+        /// <param name="preReleaseTag">Pre-release tag instance.</param>
+        /// <returns>true if the parse was successful; otherwise, false.</returns>
+        public static bool TryParse(string tag, out PreReleaseTag preReleaseTag)
+        {
+            var match = Regex.Match(tag, RegexHelper.PreReleaseTagRegex);
+
+            if (!match.Success)
+            {
+                preReleaseTag = new PreReleaseTag();
+                return false;
+            }
+
+            preReleaseTag = new PreReleaseTag
+            {
+                Name = match.Groups["Name"].Value,
+                Number = match.Groups["Number"].Success ? int.Parse(match.Groups["Number"].Value, null) : (int?)null,
+            };
+
+            return true;
         }
 
         /// <inheritdoc />
@@ -188,9 +234,35 @@ namespace Ubiety.VersionIt.Core.Version
         }
 
         /// <inheritdoc />
-        public string ToString(string format, IFormatProvider formatProvider)
+        public override string ToString()
         {
-            throw new NotImplementedException();
+            return ToString("T");
+        }
+
+        /// <inheritdoc />
+        public string ToString(string format, IFormatProvider formatProvider = null)
+        {
+            if (string.IsNullOrEmpty(format))
+            {
+                format = "T";
+            }
+
+            if (!(formatProvider is null))
+            {
+                var formatter = formatProvider.GetFormat(GetType()) as ICustomFormatter;
+                if (!(formatter is null))
+                {
+                    return formatter.Format(format, this, formatProvider);
+                }
+            }
+
+            switch (format)
+            {
+                case "T":
+                    return Number.HasValue ? $"{Name}.{Number}" : Name;
+                default:
+                    throw new FormatException($"The '{format}' format string is not supported.");
+            }
         }
 
         /// <inheritdoc />
