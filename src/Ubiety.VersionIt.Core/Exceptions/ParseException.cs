@@ -14,13 +14,15 @@
  */
 
 using System;
+using System.Runtime.Serialization;
 
 namespace Ubiety.VersionIt.Core.Exceptions
 {
     /// <summary>
     ///     Parse exception class.
     /// </summary>
-    public class ParseException : Exception
+    [Serializable]
+    public class ParseException : Exception, ISerializable
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="ParseException"/> class.
@@ -45,6 +47,16 @@ namespace Ubiety.VersionIt.Core.Exceptions
         /// <param name="innerException">Inner exception.</param>
         public ParseException(string message, Exception innerException)
             : base(message, innerException)
+        {
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ParseException"/> class.
+        /// </summary>
+        /// <param name="serializationInfo">Serialization info.</param>
+        /// <param name="streamingContext">Streaming context.</param>
+        protected ParseException(SerializationInfo serializationInfo, StreamingContext streamingContext)
+            : base(serializationInfo, streamingContext)
         {
         }
     }

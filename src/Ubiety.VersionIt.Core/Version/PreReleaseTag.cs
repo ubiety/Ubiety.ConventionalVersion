@@ -23,7 +23,7 @@ namespace Ubiety.VersionIt.Core.Version
     /// <summary>
     ///     Pre-release data for semantic version.
     /// </summary>
-    public class PreReleaseTag : IFormattable, IEquatable<PreReleaseTag>, IComparable<PreReleaseTag>
+    public sealed class PreReleaseTag : IFormattable, IEquatable<PreReleaseTag>, IComparable<PreReleaseTag>
     {
         private readonly EqualityHelper<PreReleaseTag> equality = new EqualityHelper<PreReleaseTag>(p => p.Name, p => p.Number);
 
