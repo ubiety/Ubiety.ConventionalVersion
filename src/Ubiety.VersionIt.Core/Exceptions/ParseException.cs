@@ -22,7 +22,7 @@ namespace Ubiety.VersionIt.Core.Exceptions
     ///     Parse exception class.
     /// </summary>
     [Serializable]
-    public class ParseException : Exception, ISerializable
+    public class ParseException : Exception
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="ParseException"/> class.

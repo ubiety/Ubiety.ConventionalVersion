@@ -296,7 +296,7 @@ namespace Ubiety.VersionIt.Core.Version
                 case "S":
                     return PreRelease.HasTag() ? $"{ToString("J", null)}-{PreRelease}" : ToString("J", null);
                 case "T":
-                    return PreRelease.HasTag() ? $"{ToString("J", null)}-{PreRelease.ToString("T")}" : ToString("J", null);
+                    return PreRelease.HasTag() ? $"{ToString("J", null)}-{PreRelease.ToString("T", null)}" : ToString("J", null);
                 default:
                     throw new FormatException($"The '{format}' format string is not supported.");
             }

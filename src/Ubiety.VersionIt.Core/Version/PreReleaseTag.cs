@@ -217,11 +217,11 @@ namespace Ubiety.VersionIt.Core.Version
         /// <inheritdoc />
         public override string ToString()
         {
-            return ToString("T");
+            return ToString("T", null);
         }
 
         /// <inheritdoc />
-        public string ToString(string format, IFormatProvider formatProvider = null)
+        public string ToString(string format, IFormatProvider formatProvider)
         {
             if (string.IsNullOrEmpty(format))
             {
