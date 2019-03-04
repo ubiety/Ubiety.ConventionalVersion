@@ -198,15 +198,15 @@ if (isReleaseBuild)
 {
     Task("Complete")
     .IsDependentOn("Version")
-    .IsDependentOn("Sonar")
-    .IsDependentOn("UploadCoverage")
+    .IsDependentOn("CompleteWithoutPublish")
     .IsDependentOn("Publish")
     .IsDependentOn("PushChanges");
 }
 else
 {
     Task("Complete")
-    .IsDependentOn("CompleteWithoutPublish");
+    .IsDependentOn("Sonar")
+    .IsDependentOn("UploadCoverage")
 }
 
 Task("Default")

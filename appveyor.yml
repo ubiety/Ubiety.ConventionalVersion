@@ -1,3 +1,4 @@
+skip_branch_with_pr: true
 branches:
   only:
     - master
@@ -22,7 +23,7 @@ install:
 
 build_script:
   - ps: .\build.ps1 --bootstrap
-  - ps: .\build.ps1 --currentBranch=$env:APPVEYOR_REPO_BRANCH --nugetKey=$env:NUGET_API_KEY --coverallsToken=$env:COVERALLS_REPO_TOKEN --verbosity=diagnostic
+  - ps: .\build.ps1 --currentBranch=$env:APPVEYOR_REPO_BRANCH --nugetKey=$env:NUGET_API_KEY --coverallsToken=$env:COVERALLS_REPO_TOKEN
 
 test: off
 deploy: off
