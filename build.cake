@@ -17,6 +17,7 @@
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
 var currentBranch = Argument<string>("currentBranch", GitBranchCurrent("./").FriendlyName);
+var prBranch = Argument<string>("prBranch", null);
 var coverallsToken = Argument<string>("coverallsToken", null);
 var nugetKey = Argument<string>("nugetKey", null);
 
@@ -33,7 +34,7 @@ var srcProjectDir = srcDir.Combine("Ubiety.VersionIt");
 var project = srcProjectDir.CombineWithFilePath("Ubiety.VersionIt.csproj");
 var solution = "./Ubiety.VersionIt.sln";
 var coverageFile = new FilePath("coverage.xml");
-var isReleaseBuild = string.Equals(currentBranch, "master", StringComparison.OrdinalIgnoreCase);
+var isReleaseBuild = string.Equals(currentBranch, "master", StringComparison.OrdinalIgnoreCase) && string.IsNullOrEmpty(prBranch);
 var sonarProjectKey = "ubiety_Ubiety.VersionIt";
 var sonarOrganization = "ubiety";
 var sonarLogin = "270d5d1be144926104cebc661863cd9c2cfac4f2";
