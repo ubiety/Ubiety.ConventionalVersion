@@ -39,6 +39,7 @@ var sonarProjectKey = "ubiety_Ubiety.VersionIt";
 var sonarOrganization = "ubiety";
 var sonarLogin = "270d5d1be144926104cebc661863cd9c2cfac4f2";
 var nugetSource = "https://api.nuget.org/v3/index.json";
+var isPullRequest = !string.IsNullOrEmpty(prBranch);
 
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
@@ -110,18 +111,39 @@ Task("Test")
     MoveFile(testProjectDir.CombineWithFilePath(coverageFile), artifactDir.CombineWithFilePath(coverageFile));
 });
 
-Task("SonarBegin")
-.Does(() => {
-   DotNetCoreTool("sonarscanner", new DotNetCoreToolSettings {
-       ArgumentCustomization = args => args
-            .Append("begin")
-            .Append($"/k:\"{sonarProjectKey}\"")
-            .Append($"/o:\"{sonarOrganization}\"")
-            .Append("/d:sonar.host.url=\"https://sonarcloud.io\"")
-            .Append($"/d:sonar.login=\"{sonarLogin}\"")
-            .Append($"/d:sonar.cs.opencover.reportsPaths={artifactDir.CombineWithFilePath(coverageFile)}")
-   });
-});
+if (isPullRequest)
+{
+    Task("SonarBegin")
+    .Does(() => {
+        DotNetCoreTool("sonarscanner", new DotNetCoreToolSettings {
+           ArgumentCustomization = args => args
+                .Append("begin")
+                .Append($"/k:\"{sonarProjectKey}\"")
+                .Append($"/o:\"{sonarOrganization}\"")
+                .Append("/d:sonar.host.url=\"https://sonarcloud.io\"")
+                .Append($"/d:sonar.login=\"{sonarLogin}\"")
+                .Append($"/d:sonar.cs.opencover.reportsPaths={artifactDir.CombineWithFilePath(coverageFile)}")
+                .Append($"/d:sonar.pullrequest.branch=\"{prBranch}\"")
+                .Append($"/d:sonar.pullrequest.key=\"{EnvironmentVariable("APPVEYOR_PULL_REQUEST_NUMBER")}\"")
+                .Append($"/d:sonar.pullrequest.base=\"{EnvironmentVariable("APPVEYOR_REPO_BRANCH")}\"")
+        })
+    });
+}
+else
+{
+    Task("SonarBegin")
+    .Does(() => {
+       DotNetCoreTool("sonarscanner", new DotNetCoreToolSettings {
+           ArgumentCustomization = args => args
+                .Append("begin")
+                .Append($"/k:\"{sonarProjectKey}\"")
+                .Append($"/o:\"{sonarOrganization}\"")
+                .Append("/d:sonar.host.url=\"https://sonarcloud.io\"")
+                .Append($"/d:sonar.login=\"{sonarLogin}\"")
+                .Append($"/d:sonar.cs.opencover.reportsPaths={artifactDir.CombineWithFilePath(coverageFile)}")
+       });
+    });
+}
 
 Task("SonarEnd")
 .Does(() => {
