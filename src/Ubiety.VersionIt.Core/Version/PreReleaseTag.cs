@@ -15,6 +15,7 @@
 
 using System;
 using System.Text.RegularExpressions;
+using Ubiety.VersionIt.Core.Exceptions;
 using Ubiety.VersionIt.Core.Helpers;
 
 namespace Ubiety.VersionIt.Core.Version
@@ -83,12 +84,7 @@ namespace Ubiety.VersionIt.Core.Version
         {
             if (left is null)
             {
-                throw new ArgumentNullException(nameof(left));
-            }
-
-            if (right is null)
-            {
-                throw new ArgumentNullException(nameof(right));
+                return false;
             }
 
             return left.CompareTo(right) > 0;
@@ -98,12 +94,7 @@ namespace Ubiety.VersionIt.Core.Version
         {
             if (left is null)
             {
-                throw new ArgumentNullException(nameof(left));
-            }
-
-            if (right is null)
-            {
-                throw new ArgumentNullException(nameof(right));
+                return true;
             }
 
             return left.CompareTo(right) < 0;
@@ -113,12 +104,7 @@ namespace Ubiety.VersionIt.Core.Version
         {
             if (left is null)
             {
-                throw new ArgumentNullException(nameof(left));
-            }
-
-            if (right is null)
-            {
-                throw new ArgumentNullException(nameof(right));
+                return false;
             }
 
             return left.CompareTo(right) >= 0;
@@ -128,12 +114,7 @@ namespace Ubiety.VersionIt.Core.Version
         {
             if (left is null)
             {
-                throw new ArgumentNullException(nameof(left));
-            }
-
-            if (right is null)
-            {
-                throw new ArgumentNullException(nameof(right));
+                return true;
             }
 
             return left.CompareTo(right) <= 0;
@@ -153,7 +134,7 @@ namespace Ubiety.VersionIt.Core.Version
 
             if (!TryParse(tag, out var preReleaseTag))
             {
-                throw new Exception();
+                throw new ParseException();
             }
 
             return preReleaseTag;

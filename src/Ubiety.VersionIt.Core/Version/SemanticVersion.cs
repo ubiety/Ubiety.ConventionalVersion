@@ -15,6 +15,7 @@
 
 using System;
 using System.Text.RegularExpressions;
+using Ubiety.VersionIt.Core.Exceptions;
 using Ubiety.VersionIt.Core.Helpers;
 
 namespace Ubiety.VersionIt.Core.Version
@@ -22,7 +23,7 @@ namespace Ubiety.VersionIt.Core.Version
     /// <summary>
     ///     Semantic version representation.
     /// </summary>
-    public class SemanticVersion : IFormattable, IEquatable<SemanticVersion>, IComparable<SemanticVersion>
+    public sealed class SemanticVersion : IFormattable, IEquatable<SemanticVersion>, IComparable<SemanticVersion>
     {
         private static readonly Regex SemanticRegex = new Regex(RegexHelper.SemanticVersionRegex, RegexOptions.Compiled);
         private readonly EqualityHelper<SemanticVersion> equality = new EqualityHelper<SemanticVersion>(s => s.Major, s => s.Minor, s => s.Patch, s => s.PreRelease);
@@ -89,12 +90,7 @@ namespace Ubiety.VersionIt.Core.Version
         {
             if (left is null)
             {
-                throw new ArgumentNullException(nameof(left));
-            }
-
-            if (right is null)
-            {
-                throw new ArgumentNullException(nameof(right));
+                return false;
             }
 
             return left.CompareTo(right) > 0;
@@ -104,12 +100,7 @@ namespace Ubiety.VersionIt.Core.Version
         {
             if (left is null)
             {
-                throw new ArgumentNullException(nameof(left));
-            }
-
-            if (right is null)
-            {
-                throw new ArgumentNullException(nameof(right));
+                return true;
             }
 
             return left.CompareTo(right) < 0;
@@ -119,12 +110,7 @@ namespace Ubiety.VersionIt.Core.Version
         {
             if (left is null)
             {
-                throw new ArgumentNullException(nameof(left));
-            }
-
-            if (right is null)
-            {
-                throw new ArgumentNullException(nameof(right));
+                return false;
             }
 
             return left.CompareTo(right) >= 0;
@@ -134,12 +120,7 @@ namespace Ubiety.VersionIt.Core.Version
         {
             if (left is null)
             {
-                throw new ArgumentNullException(nameof(left));
-            }
-
-            if (right is null)
-            {
-                throw new ArgumentNullException(nameof(right));
+                return true;
             }
 
             return left.CompareTo(right) <= 0;
@@ -165,7 +146,7 @@ namespace Ubiety.VersionIt.Core.Version
         {
             if (!TryParse(version, tagPrefix, out var semanticVersion))
             {
-                throw new Exception();
+                throw new ParseException();
             }
 
             return semanticVersion;
@@ -288,11 +269,11 @@ namespace Ubiety.VersionIt.Core.Version
         /// <inheritdoc />
         public override string ToString()
         {
-            return ToString("S");
+            return ToString("S", null);
         }
 
         /// <inheritdoc />
-        public string ToString(string format, IFormatProvider formatProvider = null)
+        public string ToString(string format, IFormatProvider formatProvider)
         {
             if (string.IsNullOrEmpty(format))
             {
@@ -313,9 +294,9 @@ namespace Ubiety.VersionIt.Core.Version
                 case "J":
                     return $"{Major}.{Minor}.{Patch}";
                 case "S":
-                    return PreRelease.HasTag() ? $"{ToString("J")}-{PreRelease}" : ToString("J");
+                    return PreRelease.HasTag() ? $"{ToString("J", null)}-{PreRelease}" : ToString("J", null);
                 case "T":
-                    return PreRelease.HasTag() ? $"{ToString("J")}-{PreRelease.ToString("T")}" : ToString("J");
+                    return PreRelease.HasTag() ? $"{ToString("J", null)}-{PreRelease.ToString("T")}" : ToString("J", null);
                 default:
                     throw new FormatException($"The '{format}' format string is not supported.");
             }
