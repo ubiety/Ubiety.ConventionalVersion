@@ -206,7 +206,7 @@ else
 {
     Task("Complete")
     .IsDependentOn("Sonar")
-    .IsDependentOn("UploadCoverage")
+    .IsDependentOn("UploadCoverage");
 }
 
 Task("Default")
