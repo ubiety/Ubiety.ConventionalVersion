@@ -126,7 +126,7 @@ if (isPullRequest)
                 .Append($"/d:sonar.pullrequest.branch=\"{prBranch}\"")
                 .Append($"/d:sonar.pullrequest.key=\"{EnvironmentVariable("APPVEYOR_PULL_REQUEST_NUMBER")}\"")
                 .Append($"/d:sonar.pullrequest.base=\"{EnvironmentVariable("APPVEYOR_REPO_BRANCH")}\"")
-        })
+        });
     });
 }
 else
