@@ -23,7 +23,7 @@ namespace Ubiety.VersionIt
     /// </summary>
     [Command(Name = "versionit", Description = "Version your dotnet app based on your commits")]
     [HelpOption]
-    [VersionOptionFromMember(MemberName = "Version")]
+    [VersionOptionFromMember(MemberName = nameof(Version))]
     public class Program
     {
         /// <summary>
@@ -60,12 +60,17 @@ namespace Ubiety.VersionIt
         ///     Gets or sets the configuration file path.
         /// </summary>
         [Option(Description = "Configuration file path")]
+        [FileExists]
         public string Config { get; set; }
+
+        [Option(Description = "Output type")]
+        public OutputType Output { get; set; }
 
         /// <summary>
         ///     Gets or sets a value for the project path.
         /// </summary>
         [Argument(0, Description = "Git project directory or csproj file, will use current directory if not supplied")]
+        [DirectoryExists]
         public string ProjectPath { get; set; }
 
         private string Version { get; } = typeof(Program).Assembly.GetName().Version.ToString();
