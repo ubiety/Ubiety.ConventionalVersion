@@ -25,8 +25,11 @@ namespace Ubiety.VersionIt.Core.Version
     /// </summary>
     public sealed class SemanticVersion : IFormattable, IEquatable<SemanticVersion>, IComparable<SemanticVersion>
     {
-        private static readonly Regex SemanticRegex = new Regex(RegexHelper.SemanticVersionRegex, RegexOptions.Compiled);
-        private readonly EqualityHelper<SemanticVersion> equality = new EqualityHelper<SemanticVersion>(s => s.Major, s => s.Minor, s => s.Patch, s => s.PreRelease);
+        private static readonly Regex SemanticRegex =
+            new Regex(RegexHelper.SemanticVersionRegex, RegexOptions.Compiled);
+
+        private readonly EqualityHelper<SemanticVersion> _equality =
+            new EqualityHelper<SemanticVersion>(s => s.Major, s => s.Minor, s => s.Patch, s => s.PreRelease);
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SemanticVersion"/> class.
@@ -242,7 +245,7 @@ namespace Ubiety.VersionIt.Core.Version
         /// <inheritdoc />
         public bool Equals(SemanticVersion other)
         {
-            return equality.Equals(this, other);
+            return _equality.Equals(this, other);
         }
 
         /// <inheritdoc />
@@ -275,37 +278,50 @@ namespace Ubiety.VersionIt.Core.Version
         /// <inheritdoc />
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            if (string.IsNullOrEmpty(format))
+            while (true)
             {
-                format = "J";
-            }
+                if (string.IsNullOrEmpty(format))
+                {
+                    format = "J";
+                }
 
-            if (!(formatProvider is null))
-            {
-                var formatter = formatProvider.GetFormat(GetType()) as ICustomFormatter;
-                if (!(formatter is null))
+                if (formatProvider?.GetFormat(GetType()) is ICustomFormatter formatter)
                 {
                     return formatter.Format(format, this, formatProvider);
                 }
-            }
 
-            switch (format.ToUpperInvariant())
-            {
-                case "J":
-                    return $"{Major}.{Minor}.{Patch}";
-                case "S":
-                    return PreRelease.HasTag() ? $"{ToString("J", null)}-{PreRelease}" : ToString("J", null);
-                case "T":
-                    return PreRelease.HasTag() ? $"{ToString("J", null)}-{PreRelease.ToString("T", null)}" : ToString("J", null);
-                default:
-                    throw new FormatException($"The '{format}' format string is not supported.");
+                switch (format.ToUpperInvariant())
+                {
+                    case "J":
+                        return $"{Major}.{Minor}.{Patch}";
+                    case "S":
+                        if (PreRelease.HasTag())
+                        {
+                            return $"{ToString("J", null)}-{PreRelease}";
+                        }
+
+                        format = "J";
+                        formatProvider = null;
+                        continue;
+                    case "T":
+                        if (PreRelease.HasTag())
+                        {
+                            return $"{ToString("J", null)}-{PreRelease.ToString("T", null)}";
+                        }
+
+                        format = "J";
+                        formatProvider = null;
+                        continue;
+                    default:
+                        throw new FormatException($"The '{format}' format string is not supported.");
+                }
             }
         }
 
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return equality.GetHashCode(this);
+            return _equality.GetHashCode(this);
         }
     }
 }

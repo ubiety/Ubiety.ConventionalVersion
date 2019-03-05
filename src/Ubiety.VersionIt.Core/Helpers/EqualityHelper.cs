@@ -14,6 +14,7 @@
  */
 
 using System;
+using System.Linq;
 
 namespace Ubiety.VersionIt.Core.Helpers
 {
@@ -23,15 +24,15 @@ namespace Ubiety.VersionIt.Core.Helpers
     /// <typeparam name="T">Type of instance to help.</typeparam>
     public class EqualityHelper<T>
     {
-        private readonly Func<T, object>[] fields;
+        private readonly Func<T, object>[] _fields;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="EqualityHelper{T}"/> class.
+        ///     Initializes a new instance of the <see cref="EqualityHelper{T}" /> class.
         /// </summary>
         /// <param name="fields">Class fields for hash code.</param>
         public EqualityHelper(params Func<T, object>[] fields)
         {
-            this.fields = fields;
+            _fields = fields;
         }
 
         /// <summary>
@@ -52,20 +53,7 @@ namespace Ubiety.VersionIt.Core.Helpers
                 return true;
             }
 
-            if (left.GetType() != right.GetType())
-            {
-                return false;
-            }
-
-            foreach (var field in fields)
-            {
-                if (!Equals(field(left), field(right)))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return left.GetType() == right.GetType() && _fields.All(field => Equals(field(left), field(right)));
         }
 
         /// <summary>
@@ -79,11 +67,9 @@ namespace Ubiety.VersionIt.Core.Helpers
 
             unchecked
             {
-                foreach (var field in fields)
-                {
-                    var item = field(instance);
-                    hashCode = (hashCode * 450) ^ (item is null ? 0 : item.GetHashCode());
-                }
+                hashCode = _fields.Select(field => field(instance)).Aggregate(
+                    hashCode,
+                    (current, item) => (current * 450) ^ (item is null ? 0 : item.GetHashCode()));
             }
 
             return hashCode;

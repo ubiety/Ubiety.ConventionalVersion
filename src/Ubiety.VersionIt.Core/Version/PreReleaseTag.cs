@@ -25,7 +25,8 @@ namespace Ubiety.VersionIt.Core.Version
     /// </summary>
     public sealed class PreReleaseTag : IFormattable, IEquatable<PreReleaseTag>, IComparable<PreReleaseTag>
     {
-        private readonly EqualityHelper<PreReleaseTag> equality = new EqualityHelper<PreReleaseTag>(p => p.Name, p => p.Number);
+        private readonly EqualityHelper<PreReleaseTag> _equality =
+            new EqualityHelper<PreReleaseTag>(p => p.Name, p => p.Number);
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="PreReleaseTag"/> class.
@@ -179,18 +180,13 @@ namespace Ubiety.VersionIt.Core.Version
             }
 
             var result = StringComparer.InvariantCultureIgnoreCase.Compare(Name, other.Name);
-            if (result != 0)
-            {
-                return result;
-            }
-
-            return Nullable.Compare(Number, other.Number);
+            return result != 0 ? result : Nullable.Compare(Number, other.Number);
         }
 
         /// <inheritdoc />
         public bool Equals(PreReleaseTag other)
         {
-            return equality.Equals(this, other);
+            return _equality.Equals(this, other);
         }
 
         /// <inheritdoc />
@@ -228,13 +224,9 @@ namespace Ubiety.VersionIt.Core.Version
                 format = "T";
             }
 
-            if (!(formatProvider is null))
+            if (formatProvider?.GetFormat(GetType()) is ICustomFormatter formatter)
             {
-                var formatter = formatProvider.GetFormat(GetType()) as ICustomFormatter;
-                if (!(formatter is null))
-                {
-                    return formatter.Format(format, this, formatProvider);
-                }
+                return formatter.Format(format, this, formatProvider);
             }
 
             switch (format)
@@ -249,7 +241,7 @@ namespace Ubiety.VersionIt.Core.Version
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return equality.GetHashCode(this);
+            return _equality.GetHashCode(this);
         }
 
         /// <summary>
