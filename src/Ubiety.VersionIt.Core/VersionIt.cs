@@ -23,6 +23,17 @@ namespace Ubiety.VersionIt.Core
     /// </summary>
     public class VersionIt
     {
+        private string _workingDirectory;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="VersionIt"/> class.
+        /// </summary>
+        /// <param name="workingDirectory">Working directory of the project.</param>
+        public VersionIt(string workingDirectory)
+        {
+            _workingDirectory = workingDirectory;
+        }
+
         /// <summary>
         ///     Run the version task.
         /// </summary>

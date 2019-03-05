@@ -15,7 +15,7 @@
 
 using LibGit2Sharp;
 
-namespace Ubiety.VersionIt.Core
+namespace Ubiety.VersionIt.Core.Git
 {
     /// <summary>
     ///     Git repo context.
