@@ -13,18 +13,20 @@
  *   limitations under the License.
  */
 
+using System.Reflection;
 using McMaster.Extensions.CommandLineUtils;
 using Ubiety.Console;
+using Ubiety.VersionIt.Commands;
 
 namespace Ubiety.VersionIt
 {
     /// <summary>
     ///     Main program class.
     /// </summary>
-    [Command(Name = "versionit", Description = "Version your dotnet app based on your commits")]
-    [HelpOption]
+    [Command(Name = "versionit", Description = "Version your project based on your commits")]
     [VersionOptionFromMember(MemberName = nameof(Version))]
-    public class Program
+    [Subcommand(typeof(DotNetCommand), typeof(NpmCommand))]
+    public class Program : VersionCommandBase
     {
         /// <summary>
         ///     Gets or sets a value indicating whether this is a dry run.
@@ -72,18 +74,14 @@ namespace Ubiety.VersionIt
         /// <summary>
         ///     Gets or sets a value for the project path.
         /// </summary>
-        [Argument(0, Description = "Git project directory or csproj file, will use current directory if not supplied")]
+        [Argument(0, Description = "Git project directory or project file, will use current directory if not supplied")]
         [DirectoryExists]
         public string ProjectPath { get; set; }
 
-        private string Version { get; } = typeof(Program).Assembly.GetName().Version.ToString();
+        private string Version { get; } = typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
 
-        private static int Main(string[] args)
-        {
-            return CommandLineApplication.Execute<Program>(args);
-        }
-
-        private int OnExecute()
+        /// <inheritdoc />
+        protected override int OnExecute(CommandLineApplication app)
         {
             CommandLine.Platform.Verbosity = Silent ? VerbosityLevel.Silent : VerbosityLevel.All;
 
@@ -95,6 +93,11 @@ namespace Ubiety.VersionIt
                 .CommitChanges(SkipCommit);
 
             return 0;
+        }
+
+        private static int Main(string[] args)
+        {
+            return CommandLineApplication.Execute<Program>(args);
         }
     }
 }

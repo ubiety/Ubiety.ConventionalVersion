@@ -35,6 +35,28 @@
             </summary>
             <param name="changelog">String of the changelog to write.</param>
         </member>
+        <member name="T:Ubiety.VersionIt.Commands.DotNetCommand">
+            <summary>
+                .NET command.
+            </summary>
+        </member>
+        <member name="T:Ubiety.VersionIt.Commands.NpmCommand">
+            <summary>
+                Npm command.
+            </summary>
+        </member>
+        <member name="T:Ubiety.VersionIt.Commands.VersionCommandBase">
+            <summary>
+                Base command class.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.Commands.VersionCommandBase.OnExecute(McMaster.Extensions.CommandLineUtils.CommandLineApplication)">
+            <summary>
+                Execute command.
+            </summary>
+            <param name="app">Application to use for command.</param>
+            <returns>exit code.</returns>
+        </member>
         <member name="T:Ubiety.VersionIt.Commits.CommitNote">
             <summary>
                 Git commit note.
@@ -284,10 +306,18 @@
                 Gets or sets the configuration file path.
             </summary>
         </member>
+        <member name="P:Ubiety.VersionIt.Program.Output">
+            <summary>
+                Gets or sets the output type.
+            </summary>
+        </member>
         <member name="P:Ubiety.VersionIt.Program.ProjectPath">
             <summary>
                 Gets or sets a value for the project path.
             </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.Program.OnExecute(McMaster.Extensions.CommandLineUtils.CommandLineApplication)">
+            <inheritdoc />
         </member>
         <member name="T:Ubiety.VersionIt.Project">
             <summary>

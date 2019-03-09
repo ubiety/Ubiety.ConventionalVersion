@@ -142,7 +142,7 @@ namespace Ubiety.VersionIt
                     if (!dryRun)
                     {
                         project.SetVersion(nextVersion);
-                        Commands.Stage(_repository, project.File);
+                        LibGit2Sharp.Commands.Stage(_repository, project.File);
                     }
                 }
                 else
@@ -173,7 +173,7 @@ namespace Ubiety.VersionIt
                 changelog.WriteFile(changelogText);
             }
 
-            Commands.Stage(_repository, changelog.FilePath);
+            LibGit2Sharp.Commands.Stage(_repository, changelog.FilePath);
             Step("Updated CHANGELOG.md");
 
             return this;
@@ -225,7 +225,7 @@ namespace Ubiety.VersionIt
 
             foreach (var project in _projects)
             {
-                Commands.Stage(_repository, project.File);
+                LibGit2Sharp.Commands.Stage(_repository, project.File);
             }
 
             var firstProject = _projects.First();
