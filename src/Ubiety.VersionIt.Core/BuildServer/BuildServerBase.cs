@@ -20,7 +20,7 @@ namespace Ubiety.VersionIt.Core.BuildServer
     /// <summary>
     ///     Base class for build servers.
     /// </summary>
-    public abstract class BuildServerBase : IBuildServer
+    public class BuildServerBase : IBuildServer
     {
         private static readonly List<IBuildServer> BuildServers = new List<IBuildServer>
         {
@@ -30,7 +30,7 @@ namespace Ubiety.VersionIt.Core.BuildServer
         /// <summary>
         ///     Gets a value indicating whether the build server is active.
         /// </summary>
-        public abstract bool Active { get; }
+        public virtual bool Active { get; } = false;
 
         /// <summary>
         ///     Gets the current build server.
@@ -46,7 +46,7 @@ namespace Ubiety.VersionIt.Core.BuildServer
                 }
             }
 
-            return default;
+            return new BuildServerBase();
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Ubiety.VersionIt
         private readonly Repository _repository;
         private readonly string _workingDirectoryName;
         private IEnumerable<Project> _projects;
-        private VersionIt.Configuration _configuration;
+        private Configuration _configuration;
 
         private WorkingDirectory(string directoryName)
         {
@@ -203,7 +203,7 @@ namespace Ubiety.VersionIt
                 var deserializer = new DeserializerBuilder().WithNamingConvention(new CamelCaseNamingConvention()).Build();
                 using (var reader = new StreamReader(new FileStream(path, FileMode.Open)))
                 {
-                    _configuration = deserializer.Deserialize<VersionIt.Configuration>(reader);
+                    _configuration = deserializer.Deserialize<Configuration>(reader);
                 }
             }
 

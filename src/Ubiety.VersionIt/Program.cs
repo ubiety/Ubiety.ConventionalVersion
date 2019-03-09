@@ -63,6 +63,9 @@ namespace Ubiety.VersionIt
         [FileExists]
         public string Config { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the output type.
+        /// </summary>
         [Option(Description = "Output type")]
         public OutputType Output { get; set; }
 
