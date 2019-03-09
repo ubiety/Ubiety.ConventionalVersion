@@ -80,7 +80,8 @@ namespace Ubiety.VersionIt.Core.Extensions
 
             var isRef = currentBranch.Contains("refs");
             var isBranch = currentBranch.Contains("refs/heads");
-            var localCanonicalName = isRef ? isBranch ? currentBranch : currentBranch.Replace("refs/", "refs/heads/") : $"refs/heads/{currentBranch}";
+            var branchName = isBranch ? currentBranch : currentBranch.Replace("refs/", "refs/heads/");
+            var localCanonicalName = isRef ? branchName : $"refs/heads/{currentBranch}";
 
             var tip = repository.Head.Tip;
 
