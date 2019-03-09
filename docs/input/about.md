@@ -1,3 +1,4 @@
-Title: About This Project
+Title: About VersionIt
 ---
-This project is awesome!
+
+VersionIt is a program to version your .NET or npm projects from your git commits and branches. It will also generate a nice changelog automatically.

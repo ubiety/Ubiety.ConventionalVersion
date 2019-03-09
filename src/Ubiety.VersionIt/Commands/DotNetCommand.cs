@@ -21,7 +21,7 @@ namespace Ubiety.VersionIt.Commands
     ///     .NET command.
     /// </summary>
     [Command(Description = "Version a .NET project")]
-    public class DotNetCommand
+    public class DotNetCommand : VersionCommandBase
     {
     }
 }
