@@ -65,7 +65,7 @@ namespace Ubiety.VersionIt.Core.Version
         public int Patch { get; private set; }
 
         /// <summary>
-        ///     Gets the prerelease data.
+        ///     Gets the pre-release data.
         /// </summary>
         public PreReleaseTag PreRelease { get; private set; }
 

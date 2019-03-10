@@ -20,12 +20,12 @@ using LibGit2Sharp;
 namespace Ubiety.VersionIt.Core.Extensions
 {
     /// <summary>
-    ///     Extensions for Git Repository.
+    ///     Extensions for git repository.
     /// </summary>
     public static class RepositoryExtensions
     {
         /// <summary>
-        ///     Normalize the Git repository.
+        ///     Normalize the git repository.
         /// </summary>
         /// <param name="repository"><see cref="IRepository"/> to normalize.</param>
         /// <param name="currentBranch">Current git repository branch.</param>
