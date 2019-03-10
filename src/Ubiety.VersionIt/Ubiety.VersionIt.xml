@@ -271,6 +271,31 @@
                 Gets the project comparison URL.
             </summary>
         </member>
+        <member name="T:Ubiety.VersionIt.OutputType">
+            <summary>
+                Version output type.
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.OutputType.Standard">
+            <summary>
+                Standard console output (version and changelog).
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.OutputType.BuildServer">
+            <summary>
+                Build server environment version variable output (No changelog).
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.OutputType.Version">
+            <summary>
+                Just version the project.
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.OutputType.Changelog">
+            <summary>
+                Just generate the changelog.
+            </summary>
+        </member>
         <member name="T:Ubiety.VersionIt.Program">
             <summary>
                 Main program class.

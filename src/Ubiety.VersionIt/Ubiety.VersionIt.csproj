@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <PackAsTool>true</PackAsTool>
-    <ToolCommandName>dotnet-versionit</ToolCommandName>
+    <ToolCommandName>versionit</ToolCommandName>
     <PackageOutputPath>../nupkg</PackageOutputPath>
     <LangVersion>latest</LangVersion>
     <Version>1.2.0</Version>
@@ -13,7 +13,7 @@
     <Title>VersionIt</Title>
     <Authors>coder2000</Authors>
     <PackageDescription>VersionIt is for automatically generating versions and changelog based on conventional commits.</PackageDescription>
-    <license>Apache-2.0</license>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ubiety/Ubiety.VersionIt</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ubiety/Ubiety.VersionIt</RepositoryUrl>
     <PackageTags>versioning;conventional;commits;git;changelog</PackageTags>
@@ -21,12 +21,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>Ubiety.VersionIt.xml</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="stylecop.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="stylecop.json" />
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Colorful.Console" Version="1.2.9" />
     <PackageReference Include="LibGit2Sharp" Version="0.26.0" />
@@ -48,6 +44,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Ubiety.StyleCop" Version="0.0.3" />
     <PackageReference Include="YamlDotNet" Version="5.4.1-pre0530" />
   </ItemGroup>
   <ItemGroup>

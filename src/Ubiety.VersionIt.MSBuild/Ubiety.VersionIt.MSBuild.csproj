@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
@@ -28,6 +28,7 @@
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.9.20" />
     <PackageReference Include="Microsoft.NetCore.Analyzers" />
     <PackageReference Include="StyleCop.Analyzers" />
+    <PackageReference Include="Ubiety.StyleCop" />
     <PackageReference Update="@(PackageReference)" PrivateAssets="All" />
     <PackageReference Update="Microsoft.AnalyzerPowerPack" Version="1.1.0" />
     <PackageReference Update="Microsoft.NetCore.Analyzers" Version="2.6.3">
@@ -38,6 +39,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Update="Ubiety.StyleCop" Version="0.0.3" />
   </ItemGroup>
 
 </Project>
