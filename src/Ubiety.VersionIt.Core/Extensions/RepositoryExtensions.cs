@@ -31,7 +31,7 @@ namespace Ubiety.VersionIt.Core.Extensions
         /// <param name="currentBranch">Current git repository branch.</param>
         public static void Normalize(this Repository repository, string currentBranch)
         {
-            var headSha = repository.Head.Tip.Sha;
+            var expectedSha = repository.Head.Tip.Sha;
             Remote remote;
 
             try
@@ -48,6 +48,16 @@ namespace Ubiety.VersionIt.Core.Extensions
             Commands.Fetch(repository, remote.Name, Array.Empty<string>(), null, null);
 
             repository.EnsureLocalBranch(remote, currentBranch);
+            repository.UpdateLocalBranchesFromRemote(remote.Name);
+
+            var headSha = repository.Refs.Head.TargetIdentifier;
+
+            if (!repository.Info.IsHeadDetached)
+            {
+                return;
+            }
+
+            var branchShas = repository.Branches.Where(branch => !branch.IsRemote && branch.Tip.Sha == headSha).ToList();
         }
 
         /// <summary>
@@ -102,6 +112,48 @@ namespace Ubiety.VersionIt.Core.Extensions
             }
 
             Commands.Checkout(repository, localCanonicalName);
+        }
+
+        /// <summary>
+        ///     Updates local branches.
+        /// </summary>
+        /// <param name="repository">Repository to use.</param>
+        /// <param name="remoteName">Remote to update from.</param>
+        public static void UpdateLocalBranchesFromRemote(this IRepository repository, string remoteName)
+        {
+            var prefix = $"refs/remotes/{remoteName}/";
+            var remoteHeadName = $"{prefix}HEAD";
+
+            foreach (var remoteReference in repository.Refs.FromGlob($"{prefix}*").Where(r => r.CanonicalName != remoteHeadName))
+            {
+                var referenceName = remoteReference.CanonicalName;
+                var branchName = referenceName.Substring(prefix.Length);
+
+                if (branchName == repository.Head.FriendlyName)
+                {
+                    continue;
+                }
+
+                var localCanonicalName = $"refs/heads/{branchName}";
+
+                if (repository.Refs.Any(r => r.CanonicalName == localCanonicalName))
+                {
+                    var localRef = repository.Refs[localCanonicalName];
+                    var remoteRef = remoteReference.ResolveToDirectReference();
+
+                    if (localRef.ResolveToDirectReference().TargetIdentifier == remoteRef.TargetIdentifier)
+                    {
+                        continue;
+                    }
+
+                    repository.Refs.UpdateTarget(localRef, remoteRef.Target.Id);
+                    continue;
+                }
+
+                repository.Refs.Add(localCanonicalName, new ObjectId(remoteReference.ResolveToDirectReference().TargetIdentifier), true);
+                var branch = repository.Branches[branchName];
+                repository.Branches.Update(branch, b => b.TrackedBranch = referenceName);
+            }
         }
     }
 }
