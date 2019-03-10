@@ -54,7 +54,7 @@ namespace Ubiety.Console
         /// <param name="message">Message to output.</param>
         public static void Step(string message)
         {
-            var stepMessage = "{0} {1}";
+            const string stepMessage = "{0} {1}";
             var stepFormatters = new[]
             {
                 new Formatter("√", Color.Green),
