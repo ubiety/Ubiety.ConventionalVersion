@@ -1,3 +1,4 @@
+// ReSharper disable InheritdocConsiderUsage
 /* Copyright 2019 Dieter Lunn
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +19,7 @@ using System.Runtime.Serialization;
 
 namespace Ubiety.VersionIt.Core.Exceptions
 {
+    /// <inheritdoc />
     /// <summary>
     ///     Parse exception class.
     /// </summary>
@@ -25,7 +27,7 @@ namespace Ubiety.VersionIt.Core.Exceptions
     public class ParseException : Exception
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ParseException"/> class.
+        ///     Initializes a new instance of the <see cref="ParseException" /> class.
         /// </summary>
         public ParseException()
         {

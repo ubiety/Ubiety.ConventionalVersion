@@ -17,6 +17,7 @@ using System.Collections.Generic;
 
 namespace Ubiety.VersionIt.Core.BuildServer
 {
+    /// <inheritdoc />
     /// <summary>
     ///     Base class for build servers.
     /// </summary>
@@ -27,6 +28,7 @@ namespace Ubiety.VersionIt.Core.BuildServer
             new AppVeyor(),
         };
 
+        /// <inheritdoc />
         /// <summary>
         ///     Gets a value indicating whether the build server is active.
         /// </summary>

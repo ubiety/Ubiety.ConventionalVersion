@@ -20,6 +20,7 @@ using Ubiety.VersionIt.Core.Helpers;
 
 namespace Ubiety.VersionIt.Core.Version
 {
+    /// <inheritdoc cref="IEquatable{T}" />
     /// <summary>
     ///     Semantic version representation.
     /// </summary>
@@ -229,17 +230,18 @@ namespace Ubiety.VersionIt.Core.Version
                 return -1;
             }
 
-            if (PreRelease != other.PreRelease)
+            if (PreRelease == other.PreRelease)
             {
-                if (PreRelease > other.PreRelease)
-                {
-                    return 1;
-                }
-
-                return -1;
+                return 0;
             }
 
-            return 0;
+            if (PreRelease > other.PreRelease)
+            {
+                return 1;
+            }
+
+            return -1;
+
         }
 
         /// <inheritdoc />

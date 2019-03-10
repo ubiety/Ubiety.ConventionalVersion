@@ -16,12 +16,12 @@
 namespace Ubiety.VersionIt.Core.BuildServer
 {
     /// <summary>
-    ///   Build server interface.
+    ///     Build server interface.
     /// </summary>
     public interface IBuildServer
     {
         /// <summary>
-        ///   Gets a value indicating whether the build server is active.
+        ///     Gets a value indicating whether the build server is active.
         /// </summary>
         bool Active { get; }
     }

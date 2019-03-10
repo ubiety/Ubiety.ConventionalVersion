@@ -1,9 +1,9 @@
-﻿namespace Ubiety.Markdown.Elements
+namespace Ubiety.Markdown.Elements
 {
     public class MdLink : IMarkdown
     {
-        public readonly string _text;
-        public readonly string _url;
+        private readonly string _text;
+        private readonly string _url;
 
         public MdLink(string text, string url)
         {

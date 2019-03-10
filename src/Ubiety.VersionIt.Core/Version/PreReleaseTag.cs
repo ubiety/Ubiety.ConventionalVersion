@@ -20,6 +20,7 @@ using Ubiety.VersionIt.Core.Helpers;
 
 namespace Ubiety.VersionIt.Core.Version
 {
+    /// <inheritdoc cref="IEquatable{T}" />
     /// <summary>
     ///     Pre-release data for semantic version.
     /// </summary>
@@ -59,11 +60,6 @@ namespace Ubiety.VersionIt.Core.Version
         public static implicit operator string(PreReleaseTag tag)
         {
             return tag.ToString();
-        }
-
-        public static implicit operator PreReleaseTag(string tag)
-        {
-            return Parse(tag);
         }
 
         public static bool operator ==(PreReleaseTag left, PreReleaseTag right)

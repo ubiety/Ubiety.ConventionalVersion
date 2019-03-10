@@ -17,6 +17,7 @@ using System;
 
 namespace Ubiety.VersionIt.Core.BuildServer
 {
+    /// <inheritdoc />
     /// <summary>
     ///   AppVeyor build server.
     /// </summary>
