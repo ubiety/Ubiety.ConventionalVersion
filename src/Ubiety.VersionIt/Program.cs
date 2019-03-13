@@ -13,23 +13,25 @@
  *   limitations under the License.
  */
 
+using System.Reflection;
 using McMaster.Extensions.CommandLineUtils;
-using Ubiety.Console.Ui;
+using Ubiety.Console;
+using Ubiety.VersionIt.Commands;
 
 namespace Ubiety.VersionIt
 {
     /// <summary>
     ///     Main program class.
     /// </summary>
-    [Command(Name = "versionit", Description = "Version your dotnet app based on your commits")]
-    [HelpOption]
-    [VersionOptionFromMember(MemberName = "Version")]
-    public class Program
+    [Command(Name = "versionit", Description = "Version your project based on your commits")]
+    [VersionOptionFromMember(MemberName = nameof(Version))]
+    [Subcommand(typeof(DotNetCommand), typeof(NpmCommand))]
+    public class Program : VersionCommandBase
     {
         /// <summary>
         ///     Gets or sets a value indicating whether this is a dry run.
         /// </summary>
-        [Option(Description = "Execute without actually committing")]
+        [Option(Description = "Preview changes without updating files")]
         public bool DryRun { get; set; }
 
         /// <summary>
@@ -60,22 +62,26 @@ namespace Ubiety.VersionIt
         ///     Gets or sets the configuration file path.
         /// </summary>
         [Option(Description = "Configuration file path")]
+        [FileExists]
         public string Config { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the output type.
+        /// </summary>
+        [Option(Description = "Output type")]
+        public OutputType Output { get; set; }
 
         /// <summary>
         ///     Gets or sets a value for the project path.
         /// </summary>
-        [Argument(0, Description = "Git project directory or csproj file, will use current directory if not supplied")]
+        [Argument(0, Description = "Git project directory or project file, will use current directory if not supplied")]
+        [DirectoryExists]
         public string ProjectPath { get; set; }
 
-        private string Version { get; } = typeof(Program).Assembly.GetName().Version.ToString();
+        private string Version { get; } = typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
 
-        private static int Main(string[] args)
-        {
-            return CommandLineApplication.Execute<Program>(args);
-        }
-
-        private int OnExecute()
+        /// <inheritdoc />
+        protected override int OnExecute(CommandLineApplication app)
         {
             CommandLine.Platform.Verbosity = Silent ? VerbosityLevel.Silent : VerbosityLevel.All;
 
@@ -87,6 +93,11 @@ namespace Ubiety.VersionIt
                 .CommitChanges(SkipCommit);
 
             return 0;
+        }
+
+        private static int Main(string[] args)
+        {
+            return CommandLineApplication.Execute<Program>(args);
         }
     }
 }

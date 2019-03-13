@@ -69,12 +69,12 @@ namespace Ubiety.VersionIt
                 HeaderWeight.Two));
             changelog.AddNewLines();
 
-            foreach (var rule in ConventionalRules.Rules)
+            foreach (var (key, (_, header)) in ConventionalRules.Rules)
             {
-                var commits = project.GetCommits(rule.Key);
+                var commits = project.GetCommitsOfType(key);
                 if (commits.IsAny())
                 {
-                    AddCommits(rule.Value.Header, commits, changelog);
+                    AddCommits(header, commits, changelog);
                 }
             }
 

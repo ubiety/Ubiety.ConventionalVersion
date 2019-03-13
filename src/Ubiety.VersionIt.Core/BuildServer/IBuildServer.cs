@@ -13,17 +13,16 @@
  *   limitations under the License.
  */
 
-namespace Ubiety.VersionIt.BuildServer
+namespace Ubiety.VersionIt.Core.BuildServer
 {
     /// <summary>
-    ///   Build server interface.
+    ///     Build server interface.
     /// </summary>
     public interface IBuildServer
     {
         /// <summary>
-        ///   Gets a value indicating whether the build server is active.
+        ///     Gets a value indicating whether the build server is active.
         /// </summary>
-        /// <returns>A value indicating whether the build server is active.</returns>
-        bool Active();
+        bool Active { get; }
     }
 }

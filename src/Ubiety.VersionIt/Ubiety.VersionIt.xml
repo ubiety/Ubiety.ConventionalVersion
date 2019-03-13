@@ -4,25 +4,6 @@
         <name>Ubiety.VersionIt</name>
     </assembly>
     <members>
-        <member name="T:Ubiety.VersionIt.BuildServer.AppVeyor">
-            <summary>
-              AppVeyor build server.
-            </summary>
-        </member>
-        <member name="M:Ubiety.VersionIt.BuildServer.AppVeyor.Active">
-            <inheritdoc />
-        </member>
-        <member name="T:Ubiety.VersionIt.BuildServer.IBuildServer">
-            <summary>
-              Build server interface.
-            </summary>
-        </member>
-        <member name="M:Ubiety.VersionIt.BuildServer.IBuildServer.Active">
-            <summary>
-              Gets a value indicating whether the build server is active.
-            </summary>
-            <returns>A value indicating whether the build server is active.</returns>
-        </member>
         <member name="T:Ubiety.VersionIt.Changelog">
             <summary>
                 Project changelog.
@@ -53,6 +34,28 @@
                 Write the changelog to a file.
             </summary>
             <param name="changelog">String of the changelog to write.</param>
+        </member>
+        <member name="T:Ubiety.VersionIt.Commands.DotNetCommand">
+            <summary>
+                .NET command.
+            </summary>
+        </member>
+        <member name="T:Ubiety.VersionIt.Commands.NpmCommand">
+            <summary>
+                Npm command.
+            </summary>
+        </member>
+        <member name="T:Ubiety.VersionIt.Commands.VersionCommandBase">
+            <summary>
+                Base command class.
+            </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.Commands.VersionCommandBase.OnExecute(McMaster.Extensions.CommandLineUtils.CommandLineApplication)">
+            <summary>
+                Execute command.
+            </summary>
+            <param name="app">Application to use for command.</param>
+            <returns>exit code.</returns>
         </member>
         <member name="T:Ubiety.VersionIt.Commits.CommitNote">
             <summary>
@@ -268,6 +271,31 @@
                 Gets the project comparison URL.
             </summary>
         </member>
+        <member name="T:Ubiety.VersionIt.OutputType">
+            <summary>
+                Version output type.
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.OutputType.Standard">
+            <summary>
+                Standard console output (version and changelog).
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.OutputType.BuildServer">
+            <summary>
+                Build server environment version variable output (No changelog).
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.OutputType.Version">
+            <summary>
+                Just version the project.
+            </summary>
+        </member>
+        <member name="F:Ubiety.VersionIt.OutputType.Changelog">
+            <summary>
+                Just generate the changelog.
+            </summary>
+        </member>
         <member name="T:Ubiety.VersionIt.Program">
             <summary>
                 Main program class.
@@ -303,10 +331,18 @@
                 Gets or sets the configuration file path.
             </summary>
         </member>
+        <member name="P:Ubiety.VersionIt.Program.Output">
+            <summary>
+                Gets or sets the output type.
+            </summary>
+        </member>
         <member name="P:Ubiety.VersionIt.Program.ProjectPath">
             <summary>
                 Gets or sets a value for the project path.
             </summary>
+        </member>
+        <member name="M:Ubiety.VersionIt.Program.OnExecute(McMaster.Extensions.CommandLineUtils.CommandLineApplication)">
+            <inheritdoc />
         </member>
         <member name="T:Ubiety.VersionIt.Project">
             <summary>

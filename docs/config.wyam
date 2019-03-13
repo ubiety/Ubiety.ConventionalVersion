@@ -1,7 +1,9 @@
 #recipe Docs
 
 // Customize your settings and add new ones here
-Settings[Keys.Host] = "host.com";
-Settings[DocsKeys.Title] = "My Docs";
+Settings[Keys.Host] = "versionit.dieterlunn.ca";
+Settings[DocsKeys.Title] = "Ubiety VersionIt";
+Settings[DocsKeys.SourceFiles] = @"../../src/**/{!bin,!obj,!packages,!*.Tests,}/**/*.cs";
+Settings[DocsKeys.SolutionFiles] = @"../Ubiety.VersionIt.sln";
 
 // Add any pipeline customizations here

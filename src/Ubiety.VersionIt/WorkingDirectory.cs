@@ -20,7 +20,7 @@ using System.Linq;
 using LibGit2Sharp;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-using static Ubiety.Console.Ui.CommandLine;
+using static Ubiety.Console.CommandLine;
 
 namespace Ubiety.VersionIt
 {
@@ -32,7 +32,7 @@ namespace Ubiety.VersionIt
         private readonly Repository _repository;
         private readonly string _workingDirectoryName;
         private IEnumerable<Project> _projects;
-        private VersionIt.Configuration _configuration;
+        private Configuration _configuration;
 
         private WorkingDirectory(string directoryName)
         {
@@ -142,7 +142,7 @@ namespace Ubiety.VersionIt
                     if (!dryRun)
                     {
                         project.SetVersion(nextVersion);
-                        Commands.Stage(_repository, project.File);
+                        LibGit2Sharp.Commands.Stage(_repository, project.File);
                     }
                 }
                 else
@@ -173,7 +173,7 @@ namespace Ubiety.VersionIt
                 changelog.WriteFile(changelogText);
             }
 
-            Commands.Stage(_repository, changelog.FilePath);
+            LibGit2Sharp.Commands.Stage(_repository, changelog.FilePath);
             Step("Updated CHANGELOG.md");
 
             return this;
@@ -203,7 +203,7 @@ namespace Ubiety.VersionIt
                 var deserializer = new DeserializerBuilder().WithNamingConvention(new CamelCaseNamingConvention()).Build();
                 using (var reader = new StreamReader(new FileStream(path, FileMode.Open)))
                 {
-                    _configuration = deserializer.Deserialize<VersionIt.Configuration>(reader);
+                    _configuration = deserializer.Deserialize<Configuration>(reader);
                 }
             }
 
@@ -225,7 +225,7 @@ namespace Ubiety.VersionIt
 
             foreach (var project in _projects)
             {
-                Commands.Stage(_repository, project.File);
+                LibGit2Sharp.Commands.Stage(_repository, project.File);
             }
 
             var firstProject = _projects.First();

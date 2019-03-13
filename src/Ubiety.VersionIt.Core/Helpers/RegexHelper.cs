@@ -13,21 +13,24 @@
  *   limitations under the License.
  */
 
-using System;
-
-namespace Ubiety.VersionIt.BuildServer
+namespace Ubiety.VersionIt.Core.Helpers
 {
     /// <summary>
-    ///   AppVeyor build server.
+    ///     Regular expression helper class.
     /// </summary>
-    public class AppVeyor : IBuildServer
+    public static class RegexHelper
     {
-        private const string ServerEnvVariable = "APPVEYOR";
+        /// <summary>
+        ///     Semantic version regular expression.
+        /// </summary>
+        // language=regex
+        public const string SemanticVersionRegex =
+            @"^(?<SemVer>(?<Major>\d+)(\.(?<Minor>\d+))(\.(?<Patch>\d+))?)(\.(?<FourthPart>\d+))?(-(?<Tag>[^\+]*))?(\+(?<BuildMetaData>.*))?$";
 
-        /// <inheritdoc />
-        public bool Active()
-        {
-            return !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServerEnvVariable));
-        }
+        /// <summary>
+        ///     Pre-release tag regular expression.
+        /// </summary>
+        // language=regex
+        public const string PreReleaseTagRegex = @"(?<Name>.*?)\.?(?<Number>\d+)?$";
     }
 }
