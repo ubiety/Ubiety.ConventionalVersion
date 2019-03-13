@@ -241,7 +241,6 @@ namespace Ubiety.VersionIt.Core.Version
             }
 
             return -1;
-
         }
 
         /// <inheritdoc />
@@ -263,12 +262,7 @@ namespace Ubiety.VersionIt.Core.Version
                 return true;
             }
 
-            if (GetType() != obj.GetType())
-            {
-                return false;
-            }
-
-            return Equals(obj as SemanticVersion);
+            return GetType() == obj.GetType() && Equals(obj as SemanticVersion);
         }
 
         /// <inheritdoc />

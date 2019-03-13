@@ -81,7 +81,7 @@ namespace Ubiety.VersionIt
         /// <returns>A value indicating whether the project can be versioned.</returns>
         public static bool IsVersionable(string projectFile)
         {
-            var version = GetVersion(projectFile);
+            var version = GetProjectVersion(projectFile);
             return !(version is null);
         }
 
@@ -90,7 +90,7 @@ namespace Ubiety.VersionIt
         /// </summary>
         /// <param name="projectFile">Project file to get the version for.</param>
         /// <returns>A <see cref="ProjectVersion"/> for the project.</returns>
-        public static ProjectVersion GetVersion(string projectFile)
+        public static ProjectVersion GetProjectVersion(string projectFile)
         {
             var document = XDocument.Load(projectFile);
             var versionElement = document.XPathSelectElement(VersionXPath);
@@ -105,7 +105,7 @@ namespace Ubiety.VersionIt
         /// <returns>A <see cref="Project"/>.</returns>
         public static Project Create(string projectFile)
         {
-            return new Project(projectFile, GetVersion(projectFile));
+            return new Project(projectFile, GetProjectVersion(projectFile));
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Ubiety.VersionIt
         /// </summary>
         /// <param name="type">Type of commit to get.</param>
         /// <returns>List of commits that match.</returns>
-        public IEnumerable<ConventionalCommit> GetCommits(ConventionalTypes type)
+        public IEnumerable<ConventionalCommit> GetCommitsOfType(ConventionalTypes type)
         {
             return Commits.Where(commit => commit.Type == type);
         }

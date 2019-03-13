@@ -39,7 +39,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Update="Ubiety.StyleCop" Version="0.0.3" />
+    <PackageReference Update="Ubiety.StyleCop" Version="0.0.5" />
   </ItemGroup>
 
 </Project>

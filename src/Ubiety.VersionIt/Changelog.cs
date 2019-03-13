@@ -71,7 +71,7 @@ namespace Ubiety.VersionIt
 
             foreach (var (key, (_, header)) in ConventionalRules.Rules)
             {
-                var commits = project.GetCommits(key);
+                var commits = project.GetCommitsOfType(key);
                 if (commits.IsAny())
                 {
                     AddCommits(header, commits, changelog);

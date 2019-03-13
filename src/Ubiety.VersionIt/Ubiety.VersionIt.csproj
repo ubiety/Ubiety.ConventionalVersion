@@ -5,7 +5,6 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>versionit</ToolCommandName>
-    <PackageOutputPath>../nupkg</PackageOutputPath>
     <LangVersion>latest</LangVersion>
     <Version>1.2.0</Version>
   </PropertyGroup>
@@ -44,7 +43,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Ubiety.StyleCop" Version="0.0.3" />
+    <PackageReference Include="Ubiety.StyleCop" Version="0.0.5" />
     <PackageReference Include="YamlDotNet" Version="5.4.1-pre0530" />
   </ItemGroup>
   <ItemGroup>
